@@ -1,0 +1,74 @@
+# -----------------------------
+# Rust / Cargo
+# -----------------------------
+/target
+**/target
+debug/
+release/
+/Cargo.lock
+/target/
+/gen/schemas
+
+# Backup y archivos temporales
+**/*.rs.bk
+
+# -----------------------------
+# Tauri specific
+# -----------------------------
+src-tauri/target/
+src-tauri/gen/
+src-tauri/.cargo/
+*.log
+
+# Windows build artifacts
+*.exe
+*.dll
+*.pdb
+
+# Tauri Bundles (installers)
+src-tauri/bundled/
+src-tauri/bundle/
+src-tauri/bundler/
+
+# -----------------------------
+# Node / Vite / Frontend
+# -----------------------------
+ui/node_modules/
+ui/dist/
+ui/.vite/
+ui/.cache/
+ui/.eslintcache
+ui/*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+vite-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# -----------------------------
+# OS specific
+# -----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------
+# Editor / Tooling
+# -----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------
+# Misc
+# -----------------------------
+*.tmp
+*.bak
+*.old
