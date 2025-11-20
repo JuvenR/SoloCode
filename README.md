@@ -1,1 +1,1 @@
-# OfflineLeetcode
+# SoloCode
