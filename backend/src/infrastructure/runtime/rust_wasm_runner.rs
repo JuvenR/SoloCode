@@ -15,7 +15,9 @@ impl RustWasmRunner {
         test: &TestCase,
     ) -> Result<ExecutionResult, DomainError>
     {
-     
+      Err(DomainError::InvalidState(
+        "Js WASM runner is not implemented".into(),
+    ))
       
     }
 }

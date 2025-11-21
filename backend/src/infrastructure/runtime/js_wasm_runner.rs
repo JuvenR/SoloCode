@@ -15,6 +15,8 @@ impl JsWasmRunner {
         test: &TestCase,
     ) -> Result<ExecutionResult, DomainError>
     {
-    
+     Err(DomainError::InvalidState(
+        "not implemented".into(),
+    ))
     }
 }

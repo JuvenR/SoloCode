@@ -59,3 +59,4 @@ impl Submission {
         self.result.is_some()
     }
 }
+

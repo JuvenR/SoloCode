@@ -1,4 +1,4 @@
-use crate::domain::ports::runtimes::ExecutionEngine;
+use crate::domain::ports::ExecutionEngine;
 use crate::domain::entities::{ExecutionResult, TestCase};
 use crate::domain::errors::DomainError;
 use crate::domain::value_objects::{SubmissionExecutionConfig, Language};
