@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <h1 align="center">🧩 SoloCode — Offline Coding Judge</h1>
 <p align="center"><strong>Offline Algotrainer, powered by Rust, Tauri, and a secure WASM execution engine.</strong></p>
 
@@ -63,7 +62,3 @@ SoloCode enables you to practice algorithms anywhere with native performance and
   
 <img width="6184" height="3032" alt="SoloCode - Page 2" src="https://github.com/user-attachments/assets/59b56ae8-7cbd-44a3-af4d-a770cb1e3b20" />
   
-
-
-=======
->>>>>>> Stashed changes
