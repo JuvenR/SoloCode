@@ -36,7 +36,7 @@ impl TestCase {
 
         if self.timeout_ms == 0 {
             return Err(DomainError::Validation(
-                "TestCase timeout  time cannot be zero".into(),
+                "TestCase timeout    time cannot be zero".into(),
             ));
         }
 
