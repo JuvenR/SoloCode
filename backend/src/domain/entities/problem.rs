@@ -2,6 +2,7 @@ use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
 use crate::domain::entities::TestCase;
+use crate::domain::errors::DomainError;
 use crate::domain::value_objects::Difficulty;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -35,5 +36,31 @@ impl Problem {
 
     pub fn test_count(&self) -> usize {
         self.testcases.len()
+    }
+
+    pub fn validate(&self) -> Result<(), DomainError> {
+        if self.title.trim().is_empty() {
+            return Err(DomainError::Validation(
+                "Problem title cannot be empty".into(),
+            ));
+        }
+
+        if self.description.trim().is_empty() {
+            return Err(DomainError::Validation(
+                "Problem description cannot be empty".into(),
+            ));
+        }
+
+        if self.testcases.is_empty() {
+            return Err(DomainError::Validation(
+                "Problem must contain at least one TestCase".into(),
+            ));
+        }
+
+        for tc in &self.testcases {
+            tc.validate()?;
+        }
+
+        Ok(())
     }
 }

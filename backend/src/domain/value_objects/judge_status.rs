@@ -7,3 +7,9 @@ pub enum JudgeStatus {
     TimeLimitExceeded,
     RuntimeError,
 }
+
+impl JudgeStatus {
+    pub fn is_accepted(&self) -> bool {
+        matches!(self, JudgeStatus::Accepted)
+    }
+}
