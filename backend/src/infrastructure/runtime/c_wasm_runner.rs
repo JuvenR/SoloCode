@@ -15,6 +15,9 @@ impl CWasmRunner {
         test: &TestCase,
     ) -> Result<ExecutionResult, DomainError>
     {
-      
+
+      Err(DomainError::InvalidState(
+        "not implemented".into(),
+    ))
     }
 }

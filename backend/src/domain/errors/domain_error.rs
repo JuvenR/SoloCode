@@ -1,4 +1,4 @@
-use thiserror::Error; 
+use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum DomainError {
@@ -11,8 +11,8 @@ pub enum DomainError {
     #[error("Entity not found")]
     NotFound,
 
-    #[error("Operation not permitted in current state")]
-    InvalidState,
+    #[error("Operation not permitted in current state: {0}")]
+    InvalidState(String),
 
     #[error("{0}")]
     Other(String),
