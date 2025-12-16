@@ -1,4 +1,4 @@
-import './problemView.css'
+import '../css/problemView.css'
 
 export default function ProblemExample() {
     return (

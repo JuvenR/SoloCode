@@ -1,20 +1,24 @@
-import './problemView.css'
-import { useState } from 'react';
+import './css/problemView.css'
 
-export default function problemTabs() {
-    const [activeTab, setActiveTab] = useState('description');
+interface ProblemTabsProps {
+    activeTab: string;
+    onTabChange: (tab: string) => void;
+}
+
+export default function problemTabs({ activeTab, onTabChange}: ProblemTabsProps)
+  {
     return (
         <>
             <div className="tabs-group">
                 <button
                     className={`description-button ${activeTab === 'description' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('description')}
+                    onClick={() => onTabChange('description')}
                 >
                     Description
                 </button>
                 <button
                     className={`submissions-button ${activeTab === 'submissions' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('submissions')}
+                    onClick={() => onTabChange('submissions')}
                 >
                     Submissions
                 </button>

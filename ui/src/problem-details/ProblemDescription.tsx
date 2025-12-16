@@ -1,7 +1,30 @@
-import ProblemExample from "./ProblemExample"
-import './problemView.css'
-import btnBack from './assets/backButton.png'
-import btnNext from './assets/nextButton.png'
+import ProblemExample from "../problem-details/ProblemExample"
+import '../css/problemView.css'
+import btnBack from '../assets/backButton.png'
+import btnNext from '../assets/nextButton.png'
+
+//function to manage different problem difficulties
+function DifficultyBadge({problemDifficulty} : {problemDifficulty: string}) {
+
+    if (!problemDifficulty) {
+        return <div className="problem-difficulty">No difficulty found</div>
+    }
+
+    const difficulty = problemDifficulty.toLowerCase()
+    const problemDifficulties = ['easy', 'medium', 'hard']
+
+    if (!problemDifficulties.includes(difficulty)) {
+        return <div className="problem-difficulty">No difficulty found</div>
+    }
+
+    const label = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
+
+    return <div className="problem-difficulty" id={`problem-difficulty-${difficulty}`}>
+        {label}
+    </div>
+
+}
+
 
 export default function problemDescription() {
 
@@ -12,16 +35,13 @@ export default function problemDescription() {
                 <main className="problem-main">
                     {// it is supposed to get the problem information (such as title, difficulty, examples, etc) from a DTO or another data structure
                     }
-                    
+
                     <strong className="problem-title">
                         Find Minimum Operations to Make All Elements Divisible by Three
                     </strong>
 
-                    <div className="problem-difficulty">
-                        {// TODO: how to manage different difficulties
-                        }
-                        Easy
-                    </div>
+                    <DifficultyBadge problemDifficulty ='Easy'/>
+
                     <article className="problem-description">
                         <strong> Description: </strong>
                         <p className="problem-description-content">

@@ -2,19 +2,27 @@
 
 :root {
     --problem-view-background: #27293C;
-    --green-color-background: #73b09979;
-    --green-solid-color: #7AC7B5;
     --title-color: #FFFFFF;
     --content-text-color: #E9EBF4;
     --light-gray-color: #575971;
     --gray-color: #3C3E53;
     --gray-border-color: #6F7494;
 
+    --green-background-color: #73b09979;
+    --green-solid-color: #7AC7B5;
+    --yellow-background-color: #645C4B;
+    --yellow-solid-color: #F2D98D;
+    --red-background-color: #5D3541;
+    --red-solid-color: #D97979;
+
+
     --text-light: 200;
     --text-regular: 300;
     --text-medium: 400;
     --text-semibold: 600;
     --text-bold: 700;
+
+    --dark-gray-background: #232433;
 
     font-family: 'Poppins', sans-serif;
     background-color: var(--problem-view-background);
@@ -154,14 +162,16 @@
     align-items: center;
 
     /* main style*/
-    border: 2.5px solid var(--green-solid-color);
-    background-color: var(--green-color-background);
-    color: var(--green-solid-color);
+    border: 2.5px solid var(--gray-border-color);
+    background-color: var(--light-gray-color);
+    color: var(--gray-border-color);
+
     border-radius: 32px;
     padding-left: 8px;
     padding-right: 8px;
-    width: 75px;
+    width: 140px;
     height: 33px;
+
     margin-bottom: 29px;
 
     /*text style*/
@@ -170,6 +180,30 @@
     font-weight: var(--text-medium);
 }
 
+#problem-difficulty-easy{
+    border: 2.5px solid var(--green-solid-color);
+    background-color: var(--green-background-color);
+    color: var(--green-solid-color);
+    width: 75px;
+
+
+}
+
+#problem-difficulty-medium{
+    border: 2.5px solid var(--yellow-solid-color);
+    background-color: var(--yellow-background-color);
+    color: var(--yellow-solid-color);
+    width: 99px;
+
+}
+
+#problem-difficulty-hard{
+    border: 2.5px solid var(--red-solid-color);
+    background-color: var(--red-background-color);
+    color: var(--red-solid-color);
+    width: 78px;
+
+}
 .problem-description strong {
     font-size: 20px;
     font-weight: var(--text-medium);
