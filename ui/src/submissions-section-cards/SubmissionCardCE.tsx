@@ -1,5 +1,6 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
+import { useState } from 'react'
 
 interface SubmissionProps {
     onClose: () => void
@@ -7,7 +8,7 @@ interface SubmissionProps {
 
 
 export default function SubmissionCardCompileError({ onClose }: SubmissionProps) {
-    const errorMessage = 
+    const errorMessage =
         `Line 6: error: not a statement      
         for (true) {             
             ^
@@ -15,6 +16,27 @@ Line 6: error: ';' expected
         for (true) {               
             ^ 
 2 errors`;
+
+    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+`;
+
+    const [isViewMore, setViewMore] = useState(false)
+
 
     return (
         <>
@@ -33,7 +55,7 @@ Line 6: error: ';' expected
                 </article>
 
                 <article className='ce-submission-code'>
-                        {errorMessage}
+                    {errorMessage}
                 </article>
 
                 <article className='submission-code'>
@@ -47,16 +69,21 @@ Line 6: error: ';' expected
                         </p>
                     </div>
 
-                    <div className='submission-code-content'>
-                        <div className='submission-code'>
-                            print('llamen a dios verdaderamente')
+                    <div className={`submission-code-content ${isViewMore ? 'expanded-content' : ''}`}>
+                        <div className={`submission-code-answer ${isViewMore ? 'expanded' : ''}`}>
+                            {answerCode}
                         </div>
+                        {!isViewMore && (
+                            <button className='submission-code-viewmore' onClick={() => setViewMore(true)}>
+                                v  View more
+                            </button>
+                        )}
 
-
-                        <div className='submission-code-viewmore-separator'> </div>
-                        <div className='submission-code-viewmore'>
-                            v  View more
-                        </div>
+                        {isViewMore && (
+                            <button className='submission-code-viewmore' onClick={() => setViewMore(false)}>
+                                ^ View less
+                            </button>
+                        )}
                     </div>
                 </article>
             </div>

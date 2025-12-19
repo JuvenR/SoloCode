@@ -1,11 +1,35 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
+import { useState } from 'react'
 
-interface SubmissionProps{
+interface SubmissionProps {
     onClose: () => void
 }
 
-export default function SubmissionCardAccepted({onClose} : SubmissionProps) {
+
+
+    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+pruebeeeeeeee
+`;
+
+
+
+export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
+    const [isViewMore, setViewMore] = useState(false)
     return (
         <>
             <div className='card-submission-container' id='green-container'>
@@ -27,7 +51,7 @@ export default function SubmissionCardAccepted({onClose} : SubmissionProps) {
                             Runtime
                         </p>
                         <div className='accepted-submission-info-content'>
-                           <p> 0 ms</p>
+                            <p> 0 ms</p>
                         </div>
                     </div>
 
@@ -52,16 +76,21 @@ export default function SubmissionCardAccepted({onClose} : SubmissionProps) {
                         </p>
                     </div>
 
-                    <div className='submission-code-content'>
-                        <div className='submission-code'>
-                            print('llamen a dios verdaderamente')
+                    <div className={`submission-code-content ${isViewMore ? 'expanded-content' : ''}`}>
+                        <div className={`submission-code-answer ${isViewMore ? 'expanded' : ''}`}>
+                            {answerCode}
                         </div>
-                        
+                        {!isViewMore && (
+                            <button className='submission-code-viewmore' onClick={() => setViewMore(true)}>
+                                v  View more
+                            </button>
+                        )}
 
-                        <div className='submission-code-viewmore-separator'> </div>
-                        <div className='submission-code-viewmore'>
-                            v  View more
-                        </div>
+                        {isViewMore && (
+                            <button className='submission-code-viewmore' onClick={() => setViewMore(false)}>
+                                ^ View less
+                            </button>
+                        )}
                     </div>
                 </article>
             </div>
