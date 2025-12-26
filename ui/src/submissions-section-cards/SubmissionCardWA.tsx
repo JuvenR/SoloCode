@@ -8,15 +8,7 @@ interface SubmissionProps {
 }
 
 
-export default function SubmissionCardCompileError({ onClose }: SubmissionProps) {
-    const errorMessage =
-        `Line 6: error: not a statement      
-        for (true) {             
-            ^
-Line 6: error: ';' expected
-        for (true) {               
-            ^ 
-2 errors`
+export default function SubmissionCardWA({ onClose }: SubmissionProps) {
 
     const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
 pruebeeeeeeee
@@ -36,6 +28,10 @@ pruebeeeeeeee
 pruebeeeeeeee
 `
 
+    const input = `Hola Mundo :)`
+    const output = `undefined`
+    const expected = `[ 2 , 2 ]`
+
     const [isViewMore, setViewMore] = useState(false)
 
 
@@ -43,22 +39,53 @@ pruebeeeeeeee
         <>
             <div className='card-submission-container' id='red-container'>
                 <main className='card-submission-main'>
-                    <strong className='card-title' id='red-title'>Compile Error</strong>
-                     <motion.img 
-                    whileHover={{y:-4}}
-                    src={btnClose} onClick={onClose}></motion.img>
+                    <strong className='card-title' id='red-title'>Wrong Answer</strong>
+                    <motion.img
+                        whileHover={{ y: -4 }}
+                        src={btnClose} onClick={onClose}></motion.img>
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        0 / 666 Testcases passed
+                        500 / 666 Testcases passed
                     </p>
                     <p className='card-submission-date'>
                         Submitted at Nov 22, 2025 14:48
                     </p>
                 </article>
 
-                <article className='ce-submission-code'>
-                    {errorMessage}
+                 <article className='submission-testcase-button'>
+                   <motion.button 
+                   whileHover={{y:-4}}
+                   className='submission-use-testcase'>
+                    Use Testcase
+                   </motion.button>
+                </article>
+
+                <article className='submission-input'>
+                    <p className='submission-subtitle'>
+                        Your Input
+                    </p>
+                    <div className='executed-code'>
+                        {input}
+                    </div>
+                </article>
+
+                <article className='submission-output'>
+                    <p className='submission-subtitle'>
+                        Output
+                    </p>
+                    <div className='executed-code'>
+                        {output}
+                    </div>
+                </article>
+
+                 <article className='submission-expected'>
+                    <p className='submission-subtitle'>
+                        Expected
+                    </p>
+                    <div className='executed-code'>
+                        {expected}
+                    </div>
                 </article>
 
                 <article className='submission-code'>

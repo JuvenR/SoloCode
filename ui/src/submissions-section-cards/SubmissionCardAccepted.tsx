@@ -1,6 +1,8 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
 import { useState } from 'react'
+import { motion } from 'motion/react'
+
 
 interface SubmissionProps {
     onClose: () => void
@@ -24,7 +26,7 @@ pruebeeeeeeee
 pruebeeeeeeee
 pruebeeeeeeee
 pruebeeeeeeee
-`;
+`
 
 
 
@@ -35,14 +37,16 @@ export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
             <div className='card-submission-container' id='green-container'>
                 <main className='card-submission-main'>
                     <strong className='card-title' id='green-title'>Accepted</strong>
-                    <img src={btnClose} onClick={onClose}></img>
+                    <motion.img 
+                    whileHover={{y:-4}}
+                    src={btnClose} onClick={onClose}></motion.img>
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
                         666 / 666 Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        submitted at Nov 22, 2025 14:48
+                        Submitted at Nov 22, 2025 14:48
                     </p>
                 </article>
                 <article className='accepted-submission-details'>

@@ -1,27 +1,31 @@
 import './css/problemView.css'
+import { motion } from 'motion/react'
 
 interface ProblemTabsProps {
     activeTab: string;
     onTabChange: (tab: string) => void;
 }
 
-export default function problemTabs({ activeTab, onTabChange}: ProblemTabsProps)
-  {
+export default function problemTabs({ activeTab, onTabChange }: ProblemTabsProps) {
     return (
         <>
             <div className="tabs-group">
-                <button
+                <motion.button
+                    whileHover={{ scaleY: .96 }}
+                    style={{ originY: 1 }}
                     className={`description-button ${activeTab === 'description' ? 'active' : ''}`}
                     onClick={() => onTabChange('description')}
                 >
                     Description
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                    whileHover={{ scaleY: .96 }}
+                    style={{ originY: 1 }}
                     className={`submissions-button ${activeTab === 'submissions' ? 'active' : ''}`}
                     onClick={() => onTabChange('submissions')}
                 >
                     Submissions
-                </button>
+                </motion.button>
             </div>
         </>
     )

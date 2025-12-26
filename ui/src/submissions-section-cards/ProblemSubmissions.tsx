@@ -20,7 +20,7 @@ export default function ProblemSubmissions() {
                     <SubmissionCard submissionType="Wrong Answer" />
                     <SubmissionCard submissionType="Time Limit Exceeded" />
                     <SubmissionCard submissionType="Memory Limit Exceeded" />
-
+                    <SubmissionCard submissionType="Runtime Error" />
 
                 </main>
             </div>

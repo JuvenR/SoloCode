@@ -8,15 +8,7 @@ interface SubmissionProps {
 }
 
 
-export default function SubmissionCardCompileError({ onClose }: SubmissionProps) {
-    const errorMessage =
-        `Line 6: error: not a statement      
-        for (true) {             
-            ^
-Line 6: error: ';' expected
-        for (true) {               
-            ^ 
-2 errors`
+export default function SubmissionCardTLE({ onClose }: SubmissionProps) {
 
     const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
 pruebeeeeeeee
@@ -36,6 +28,9 @@ pruebeeeeeeee
 pruebeeeeeeee
 `
 
+    const lastExecutedInput = '[1,0,0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,00000000000000000000000000000000000000000,0,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0,1]'
+
+
     const [isViewMore, setViewMore] = useState(false)
 
 
@@ -43,23 +38,29 @@ pruebeeeeeeee
         <>
             <div className='card-submission-container' id='red-container'>
                 <main className='card-submission-main'>
-                    <strong className='card-title' id='red-title'>Compile Error</strong>
-                     <motion.img 
-                    whileHover={{y:-4}}
-                    src={btnClose} onClick={onClose}></motion.img>
+                    <strong className='card-title' id='red-title'>Time Limit Exceeded</strong>
+                    <motion.img
+                        whileHover={{ y: -4 }}
+                        src={btnClose} onClick={onClose}></motion.img>
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        0 / 666 Testcases passed
+                        100 / 666 Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Submitted at Nov 22, 2025 14:48
+                        Aubmitted at Nov 22, 2025 14:48
                     </p>
                 </article>
 
-                <article className='ce-submission-code'>
-                    {errorMessage}
+                <article className='submission-last-executed-input'>
+                    <p className='submission-subtitle'>
+                        Last Executed Input
+                    </p>
+                    <div className='executed-code'>
+                        {lastExecutedInput}
+                    </div>
                 </article>
+
 
                 <article className='submission-code'>
                     <div className='submission-code-details'>

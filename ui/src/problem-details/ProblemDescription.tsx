@@ -2,6 +2,7 @@ import ProblemExample from "../problem-details/ProblemExample"
 import '../css/problemView.css'
 import btnBack from '../assets/backButton.png'
 import btnNext from '../assets/nextButton.png'
+import { motion } from 'motion/react'
 
 //function to manage different problem difficulties
 function DifficultyBadge({problemDifficulty} : {problemDifficulty: string}) {
@@ -59,11 +60,11 @@ export default function problemDescription() {
                 </main>
                 <footer className="problem-footer">
                     <button className="problem-pagination-button" id="btnBack">
-                        <img src={btnBack}></img>
+                        <motion.img src={btnBack} whileHover={{y:-4}}></motion.img>
                     </button>
                     <p className="problem-number">3190</p>
                     <button className="problem-pagination-button" id="btnNext">
-                        <img src={btnNext}></img>
+                        <motion.img src={btnNext} whileHover={{y:-4}}></motion.img>
                     </button>
                 </footer>
             </div>
