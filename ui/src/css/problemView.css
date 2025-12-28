@@ -1,32 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-:root {
-    --problem-view-background: #27293C;
-    --title-color: #FFFFFF;
-    --content-text-color: #E9EBF4;
-    --light-gray-color: #575971;
-    --gray-color: #3C3E53;
-    --gray-border-color: #6F7494;
-
-    --green-background-color: #73b09979;
-    --green-solid-color: #7AC7B5;
-    --yellow-background-color: #645C4B;
-    --yellow-solid-color: #F2D98D;
-    --red-background-color: #5D3541;
-    --red-solid-color: #D97979;
-
-
-    --text-light: 200;
-    --text-regular: 300;
-    --text-medium: 400;
-    --text-semibold: 600;
-    --text-bold: 700;
-
-    --dark-gray-background: #232433;
-
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--problem-view-background);
-}
 
 /* upper tabs styles */
 

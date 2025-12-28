@@ -273,11 +273,14 @@
 }
 
 .submission-use-testcase:hover {
-    filter: brightness(1.5);
+    background-color: #3c3e536f;
+    border: 2px solid var(--content-text-color);
+ 
+    
 
 }
 
-.submission-testcase-button {
+.submission-testcase-container {
     display: flex;
     justify-content: right;
     margin-bottom: -10px;

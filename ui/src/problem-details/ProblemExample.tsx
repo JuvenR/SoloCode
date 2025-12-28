@@ -22,7 +22,7 @@ export default function ProblemExample() {
                             <strong> Output: </strong>
                             3
                         </p>
-                        <p className="example-content">
+                        <div className="example-content">
                             <strong> Explanation: </strong>
                             All array elements can be made divisible by 3 using 3 operations:
                             <ul className="example-explanation">
@@ -30,7 +30,7 @@ export default function ProblemExample() {
                                 <li>Add 1 to 2.</li>
                                 <li>Subtract 1 from 4.</li>
                             </ul>
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -53,7 +53,7 @@ pruebeeeeeeee
                     </p>
                 </article>
 
-                 <article className='submission-testcase-button'>
+                 <article className='submission-testcase-container'>
                    <motion.button 
                    whileHover={{y:-4}}
                    className='submission-use-testcase'>
