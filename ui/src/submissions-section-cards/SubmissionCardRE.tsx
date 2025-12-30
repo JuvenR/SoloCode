@@ -2,6 +2,7 @@ import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
 import { useState } from 'react'
 import { motion } from 'motion/react'
+import CodeContainer from './CodeContainer'
 
 interface SubmissionProps {
     onClose: () => void
@@ -82,22 +83,7 @@ pruebeeeeeeee
                         </p>
                     </div>
 
-                    <div className={`submission-code-content ${isViewMore ? 'expanded-content' : ''}`}>
-                        <div className={`submission-code-answer ${isViewMore ? 'expanded' : ''}`}>
-                            {answerCode}
-                        </div>
-                        {!isViewMore && (
-                            <button className='submission-code-viewmore' onClick={() => setViewMore(true)}>
-                                v  View more
-                            </button>
-                        )}
-
-                        {isViewMore && (
-                            <button className='submission-code-viewmore' onClick={() => setViewMore(false)}>
-                                ^ View less
-                            </button>
-                        )}
-                    </div>
+                     <CodeContainer answerCode={answerCode} isViewMore={isViewMore} setViewMore = {setViewMore}/>
                 </article>
             </div>
         </>

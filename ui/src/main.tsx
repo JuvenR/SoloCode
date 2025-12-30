@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import ProblemView from './ProblemView'
 import CodeEditor from './CodeEditor'
+import RunCodeView from './RunCodeView'
 import './css/app.css'
 
 
@@ -11,9 +12,14 @@ createRoot(document.getElementById('root')!).render(
       <div className='app-problem-view'>
         <ProblemView />
       </div>
-      <div className='app-code-editor'>
-        <CodeEditor  />
-      </div>
+      <aside className='code-run'>
+        <div className='app-code-editor'>
+          <CodeEditor />
+        </div>
+        <div className='run-code-area'>
+          <RunCodeView />
+        </div>
+      </aside>
     </main>
 
   </StrictMode>,

@@ -15,7 +15,7 @@
 
 .tabs-group button {
     flex: 1;
-    background-color: #1c1d27d9;
+    background-color: var(--dark-gray);
     border: none;
     color: var(--title-color);
     font-weight: var(--text-semibold);

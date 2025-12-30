@@ -23,6 +23,7 @@
     --text-bold: 700;
 
     --dark-gray-background: #232433;
+    --dark-gray: #1C1D27;
 
     font-family: 'Poppins', sans-serif;
     background-color: var(--problem-view-background);
@@ -34,4 +35,10 @@
     gap: 10px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.code-run{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
 }
