@@ -1,5 +1,5 @@
 import './css/testCases.css'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useEffect, useState } from 'react'
 
 interface TestCaseProps {
@@ -73,52 +73,73 @@ function TestCasesView() {
 
     const [activeTab, setActiveTab] = useState<number>(0)
 
-    //array with the default testcases
-    const [cases, setCase] = useState<string[]>([
-        "nums = [2,7,11,15]\ntarget = 9",
-        "nums = [3,2,4]\ntarget = 6",
-        "nums = [3,3]\ntarget = 6"
+    //map with the default testcases (key, value)
+    const [cases, setCase] = useState([
+        { id: 1, content: "nums = [2,7,11,15]\ntarget = 9" },
+        { id: '2', content: "nums = [3,2,4]\ntarget = 6" },
+        { id: '3', content: "nums = [3,3]\ntarget = 6" }
     ])
 
-    const deleteTestCase = (index: number) => {
+    const deleteTestCase = (index: string) => {
         if (cases.length <= 1) return;
 
-        const updatedCases = cases.filter((_,i) => i !== index)
+        const indexToDelete = cases.findIndex(c => c.id === index)
+        const updatedCases = cases.filter(c => c.id !== index)
         setCase(updatedCases)
-        if(activeTab >= updatedCases.length){
-            setActiveTab(updatedCases.length-1)
-        } else if(activeTab === index){
-            setActiveTab(activeTab-1)
+
+        if (indexToDelete === activeTab) {
+            setActiveTab(Math.max(0, indexToDelete - 1))
+        } else if (indexToDelete < activeTab) {
+            setActiveTab(activeTab - 1)
         }
 
     }
 
     const updateTestCase = (newValue: string) => {
-        const updatedCases = [...cases]
-        updatedCases[activeTab] = newValue
+        const updatedCases = cases.map((item, i) => {
+            if (i === activeTab) {
+                return { ...item, content: newValue }
+            }
+            return item
+        })
+
         setCase(updatedCases)
     }
 
     //to add a customized testcase
     const addTestCase = () => {
-        const newCases = [...cases, ""]
+        // generate an ID based on current date
+        const newCase = { id: Date.now().toString(), content: "" }
+        const newCases = [...cases, newCase]
         setCase(newCases)
-        setActiveTab(newCases.length-1)
+        setActiveTab(newCases.length - 1)
     }
     return (
         <>
             <main className='testcase-main'>
                 <nav className='cases-container'>
-                    {cases.map((_, i) => (
-                        <TestCase
-                            key={i}
-                            number={(i + 1).toString()}
-                            onClick={() => setActiveTab(i)}
-                            onDelete={() => deleteTestCase(i)}
-                            canDelete={cases.length>1}
-                            isActive={activeTab === i} />
-                    ))}
+                    <AnimatePresence mode='popLayout'>
 
+
+                        {cases.map((test, i) => (
+                            <motion.div
+                                key={test.id}
+                                layout
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                            >
+
+                                <TestCase
+                                    key={test.id}
+                                    number={(i + 1).toString()}
+                                    onClick={() => setActiveTab(i)}
+                                    onDelete={() => deleteTestCase(test.id)}
+                                    canDelete={cases.length > 1}
+                                    isActive={activeTab === i} />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                     <motion.button
                         className='testcase-button'
                         whileHover={{ y: -2 }}
@@ -127,8 +148,8 @@ function TestCasesView() {
                     > + </motion.button>
                 </nav>
                 <TestCaseContent
-                    key={activeTab}
-                    content={cases[activeTab]}
+                    key={cases[activeTab]?.id || 'empty'}
+                    content={cases[activeTab]?.content || ""}
                     onChange={updateTestCase}
                 />
             </main>
