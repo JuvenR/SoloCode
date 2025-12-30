@@ -74,3 +74,10 @@
     background-color: #73b09970;
     color: #B9FFC0;
 }
+
+.code-editor-area{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom: 2px solid var(--gray-border-color);
+    overflow: hidden;
+}
