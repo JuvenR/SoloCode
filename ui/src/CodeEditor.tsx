@@ -1,23 +1,31 @@
 import { Editor } from "@monaco-editor/react"
 import type { Monaco } from "@monaco-editor/react"
 import { motion } from 'motion/react'
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import './css/codeEditor.css'
+import { loader } from "@monaco-editor/react";
 
+loader.config({
+  paths: {
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+  },
+});
 
 interface editorLanguageProps {
     language: string,
-    setLanguage: (language: string) => void
+    setLanguage: (language: string) => void,
+    onRun: () => void,
+    isLoading: boolean
 }
 
 // mapping object to create a boilerplate for each language
-const CODE_LANGUAGES: Record< string, string> = {
-    javascript : '// hello world from JS',
-    python : '# hello world from Python',
+const CODE_LANGUAGES: Record<string, string> = {
+    javascript: '// hello world from JS',
+    python: '# hello world from Python',
     cpp: '// hello world from C++'
 }
 
-function CodeEditorHeader({ language, setLanguage }: editorLanguageProps) {
+function CodeEditorHeader({ language, setLanguage, onRun, isLoading }: editorLanguageProps) {
 
     return (
         <>
@@ -30,7 +38,15 @@ function CodeEditorHeader({ language, setLanguage }: editorLanguageProps) {
                     </select>
                 </div>
                 <div className="button-group">
-                    <motion.button className="run-code" whileHover={{ y: -2 }}>Run Code</motion.button>
+                    <motion.button
+                        className="run-code"
+                        whileHover={{ y: -2 }}
+                        onClick={onRun}
+                        disabled={isLoading}
+                        style={{opacity:isLoading ? 0.5 : 1}}
+                    >{isLoading ? 'Running' : 'Run Code'}
+                    </motion.button>
+
                     <motion.button className="submit-code" whileHover={{ y: -2 }}>Submit</motion.button>
                 </div>
             </main>
@@ -38,14 +54,12 @@ function CodeEditorHeader({ language, setLanguage }: editorLanguageProps) {
     )
 }
 
-export default function CodeEditor() {
-
-    //state hook to set the language 
-    const [language, setLanguage] = useState<string>('javascript')
+export default function CodeEditor({ controller }: { controller: any }) {
 
     // monaco model with useRef hook to save references for each code written and re-render the editor component
-    const modelsRef = useRef<Record<string, any>>({}) //!!!!
+    const modelsRef = useRef<Record<string, any>>({})
     const editorRef = useRef<any>(null)
+
     const handleEditorDidMount = (editor: any, monaco: Monaco) => {
         editorRef.current = editor
 
@@ -53,17 +67,29 @@ export default function CodeEditor() {
         Object.entries(CODE_LANGUAGES).forEach(([languageName, code]) => {
             modelsRef.current[languageName] = monaco.editor.createModel(code, languageName)
         })
-
-        editor.setModel(modelsRef.current['javascript'])
+        const initialModel = modelsRef.current['javascript']
+        editor.setModel(initialModel)
+        controller.setCode(initialModel.getValue())
     }
 
-    const changeLanguage = (languageChanged :string) =>{
-        setLanguage(languageChanged)
-        if(editorRef.current && modelsRef.current[languageChanged]){
-            editorRef.current.setModel(modelsRef.current[languageChanged])
+    const changeLanguage = (languageChanged: string) => {
+        controller.setLanguage(languageChanged)
+        if (editorRef.current && modelsRef.current[languageChanged]) {
+            const newModel = modelsRef.current[languageChanged]
+            editorRef.current.setModel(newModel)
+            controller.setCode(newModel.getValue())
         }
     }
 
+    const handleEditorChange = ( value: string | undefined) => {
+        controller.setCode(value || "")
+    }
+
+    const handleRunClick = () => {
+        if (editorRef.current) {
+            controller.runCode()
+        }
+    }
 
     const handleEditorWillMount = (monaco: Monaco) => {
         monaco.editor.defineTheme('solocode-theme', {
@@ -85,13 +111,18 @@ export default function CodeEditor() {
     return (
         <>
             <div >
-                <CodeEditorHeader language={language} setLanguage={changeLanguage} />
-                <div className="code-editor-area">
+                <CodeEditorHeader
+                    language={controller.language}
+                    setLanguage={changeLanguage}
+                    onRun={handleRunClick} 
+                    isLoading={controller.isRunning}
+                />
+                <div className={`code-editor-area ${controller.statusColor}`} >
                     <Editor
                         height='430px'
-                        width='925px'
-                        language={language}
-                        defaultValue={CODE_LANGUAGES[language]}
+                        width='930px'
+                        language={controller.language}
+                        defaultValue={CODE_LANGUAGES[controller.language]}
                         theme='solocode-theme'
                         onMount={handleEditorDidMount}
                         beforeMount={handleEditorWillMount}
@@ -99,7 +130,8 @@ export default function CodeEditor() {
                             fontSize: 14,
                             padding: { top: 24 },
                             minimap: { enabled: false }
-                        }} />
+                        }} 
+                        onChange={handleEditorChange}/>
 
                 </div>
 

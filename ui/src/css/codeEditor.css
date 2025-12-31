@@ -1,5 +1,7 @@
+
 .main-header {
     display: flex;
+    width: 930px;
     padding-left: 28px;
     height: 63px;
     align-items: center;
@@ -80,4 +82,12 @@
     border-bottom-right-radius: 20px;
     border-bottom: 2px solid var(--gray-border-color);
     overflow: hidden;
+}
+
+.code-editor-area.green{
+    border-bottom: 2px solid var(--green-solid-color);
+}
+
+.code-editor-area.red{
+    border-bottom: 2px solid var(--red-solid-color);
 }
