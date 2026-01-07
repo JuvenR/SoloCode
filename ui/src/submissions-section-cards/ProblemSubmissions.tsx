@@ -8,7 +8,7 @@ const cardVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible : (i:number) => ({
         opacity: 1, y:0, transition: {
-            delay : i * 0.1, type: 'spring', stiffness: 300, damping: 24
+            delay : i * 0.07, type: 'spring', stiffness: 300, damping: 24
         }
     })
 }

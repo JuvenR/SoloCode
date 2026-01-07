@@ -81,22 +81,7 @@ Hola Mundo :)
                      <p className='submission-subtitle'>
                         Last Executed Output
                     </p>
-                    <div className={`submission-code-content ${isViewMore ? 'expanded-content' : ''}`}>
-                        <div className={`submission-code-answer ${isViewMore ? 'expanded' : ''}`}>
-                            {lastExecutedOutput}
-                        </div>
-                        {!isViewMore && (
-                            <button className='submission-code-viewmore' onClick={() => setViewMore(true)}>
-                                v  View more
-                            </button>
-                        )}
-
-                        {isViewMore && (
-                            <button className='submission-code-viewmore' onClick={() => setViewMore(false)}>
-                                ^ View less
-                            </button>
-                        )}
-                    </div>
+                   <CodeContainer answerCode={lastExecutedOutput} isViewMore={isViewMore} setViewMore = {setViewMore}/>
                 </article>
 
                 <article className='submission-code'>

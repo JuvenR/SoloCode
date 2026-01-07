@@ -171,9 +171,9 @@
 
 ::-webkit-scrollbar {
     background-color: transparent;
-    height: 10%;
+    height: 10px;
     border-radius: 50px;
-    width: 10px;
+    width: 9px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -236,7 +236,7 @@
 }
 
 .executed-code {
-    width: 365px;
+    width: 98%;
     word-break: break-all;
     background-color: var(--dark-gray-background);
     border-bottom: 2px solid var(--light-gray-color);

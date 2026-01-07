@@ -63,13 +63,13 @@ export default function SubmissionCard({ id, status, date, language, memory, run
                 <div className='submission-container'>
 
                     <p className='submission-info'> {language}</p>
-                    <div className='submission-separator'></div>
+                    <div className='submission-separator' id='card'></div>
 
                     <p className='submission-info'> {runtime} ms</p>
-                    <div className='submission-separator'></div>
+                    <div className='submission-separator' id='card'></div>
 
                     <p className='submission-info'> {memory} MB</p>
-                    <div className='submission-separator'></div>
+                    <div className='submission-separator' id='card'></div>
 
                     <p className='submission-info'>{date}</p>
 
@@ -82,7 +82,7 @@ export default function SubmissionCard({ id, status, date, language, memory, run
                         initial={{ opacity: 0, y: 0 }}
                         animate={{ opacity: 1, y: 10 }}
                         exit={{ y: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
 
                         className="submission-details-wrapper">
                         {submissionCardType()}
