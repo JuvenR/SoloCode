@@ -1,10 +1,20 @@
 import '../css/submissionsView.css'
 import SubmissionCard from './SubmissionCard'
 import { motion } from 'motion/react'
+import type { Variants } from 'motion/react'
+import { useSubmissionController } from '../UseSubmissionsController'
 
-
-
+const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 10 },
+    visible : (i:number) => ({
+        opacity: 1, y:0, transition: {
+            delay : i * 0.1, type: 'spring', stiffness: 300, damping: 24
+        }
+    })
+}
 export default function ProblemSubmissions() {
+    const controller = useSubmissionController()
+
     return (
         <>
             {
@@ -12,39 +22,34 @@ export default function ProblemSubmissions() {
             }
             <div className='submissions-container'>
                 <div className='submissions-container-header'></div>
-                <main className='submissions-main'>
+                <motion.main
+                    className='submissions-main'
+                    initial='hidden'
+                    animate='show'
+                >
                     <strong className='submissions-main-title'>Submissions for this problem</strong>
 
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Accepted" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Compile Error" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Output Limit Exceeded" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Wrong Answer" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Time Limit Exceeded" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Memory Limit Exceeded" />
-                    </motion.div>
-                    <motion.div initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: 'easeIn' }}>
-                        <SubmissionCard submissionType="Runtime Error" />
-                    </motion.div>
+                    {controller.submissions.map((sub, i) => (
+                        <motion.div
+                            key={sub.id}
+                            custom={i}
+                            variants={cardVariants}
+                            layout
+                            initial='hidden'
+                            animate='visible'
+                        >
+                            <SubmissionCard 
+                            id={sub.id}
+                            status={sub.status}
+                            date={sub.date}
+                            language={sub.language}
+                            memory={sub.memory}
+                            runtime={sub.runtime}
+                             />
+                        </motion.div>
+                    ))}
 
-
-
-
-
-
-
-
-                </main>
+                </motion.main>
             </div>
         </>
     )

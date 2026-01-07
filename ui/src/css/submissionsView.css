@@ -29,6 +29,7 @@
     margin-right: 55px;
     margin-bottom: 30px;
     gap:16px;
+    min-height: 100px;
 }
 
 .submissions-main-title {

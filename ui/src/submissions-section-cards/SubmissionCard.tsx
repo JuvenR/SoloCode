@@ -8,15 +8,14 @@ import SubmissionCardWA from './SubmissionCardWA'
 import SubmissionCardTLE from './SubmissionCardTLE'
 import SubmissionCardMLE from './SubmissionCardMLE'
 import SubmissionCardRE from './SubmissionCardRE'
+import type {Submission} from '../UseSubmissionsController'
 
-export default function SubmissionCard({ submissionType }: { submissionType: string }) {
+export default function SubmissionCard({ id, status, date, language, memory, runtime }: Submission) {
 
-    const isSubmissionAccepted = submissionType?.toLowerCase() === 'accepted'
+    const isSubmissionAccepted =status ?.toLowerCase() === 'accepted'
     const submissionColor = isSubmissionAccepted ? 'green' : 'red'
 
     const [isOpen, setIsOpen] = useState(false);
-
-    const submissionResult = submissionType.toLowerCase()
 
     const toggleOpen = () => {
         setIsOpen(!isOpen)
@@ -24,39 +23,43 @@ export default function SubmissionCard({ submissionType }: { submissionType: str
 
     const submissionCardType = () => {
 
-        switch (submissionResult) {
+        switch (status) {
             case 'accepted':
                 return <SubmissionCardAccepted onClose={() => setIsOpen(false)} />
 
-            case 'compile error':
+            case 'compile_error':
                 return <SubmissionCardCompileError onClose={() => setIsOpen(false)} />
 
-            case 'output limit exceeded':
+            case 'output_limit_exceeded':
                 return <SubmissionCardOLE onClose={() => setIsOpen(false)} />
 
-            case 'wrong answer':
+            case 'wrong_answer':
                 return <SubmissionCardWA onClose={() => setIsOpen(false)} />
 
-            case 'time limit exceeded':
+            case 'time_limit_exceeded':
                 return <SubmissionCardTLE onClose={() => setIsOpen(false)} />
 
-            case 'memory limit exceeded':
+            case 'memory_limit_exceeded':
                 return <SubmissionCardMLE onClose={() => setIsOpen(false)} />
 
-            case 'runtime error':
+            case 'runtime_error':
                 return <SubmissionCardRE onClose={() => setIsOpen(false)} />
         }
     }
 
-    const language = 'Python'
-    const runtime = 0
-    const memory = 43.78
-    const date = 'Nov 26, 2025'
+    const formattedTitle = (text:string) => {
+        if(!text) return ''
+        return text
+        .toLowerCase()
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, char => char.toUpperCase())
+    }
 
     return (
+        
         <>
             <motion.div whileHover={{ y: -5 }} className='problem-submission' id={`submission-${submissionColor}`} onClick={toggleOpen}>
-                <strong className='submission-title' id={`title-${submissionColor}`}>{submissionType}</strong>
+                <strong className='submission-title' id={`title-${submissionColor}`}>{formattedTitle(status)}</strong>
                 <div className='submission-container'>
 
                     <p className='submission-info'> {language}</p>

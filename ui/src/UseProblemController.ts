@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 type SubmissionStatus = 'accepted' | 'wrong_answer' | 'compile_error' | 'runtime_error' | 'time_limit_exceeded' | 'output_limit_exceeded' | 'memory_limit_exceeded'
 export interface ExecutionResult {
@@ -21,17 +21,46 @@ export const getStatusColor  = (status:string | undefined) => {
 export function useProblemController() {
     const [language, setLanguage] = useState<string>('javascript') // state of the language on use
     const [isRunning, setIsRunning] = useState(false)  // if the code is runing with a test case
-
     const [code, setCode] = useState<string>('')
     const [activeTab, setActiveTab] = useState<number>(0)
     const [activeTestView, setActiveTestView] = useState<'testcases' | 'results'>('testcases')
 
     //map with the default testcases (key, value)
     const [cases, setCase] = useState([
-        { id: '1', content: "nums = [2,7,11,15]\ntarget = 9" },
-        { id: '2', content: "nums = [3,2,4]\ntarget = 6" },
-        { id: '3', content: "nums = [3,3]\ntarget = 6" }
+        { id: '1', content: "nums = [2,7,11,15]"},
+        { id: '2', content: "nums = [3,2,4]" },
+        { id: '3', content: "nums = [3,3]" }
     ])
+
+    // test case view
+
+    // transform the cases array into a single string
+    const getRawCases = useMemo(() => {
+        return cases.map(c => c.content).join('\n')
+    }, [cases])
+
+    // splits the string with the test cases into the cases array
+    const setCasesFromRaw = (text : string) => {
+
+        if(!text.trim()) {
+            setCase([{ id: Date.now().toString(), content: ''}])
+            setActiveTab(0)
+            return
+        }
+
+        const lines = text.split('\n')
+
+        const newCases = lines.map((line, index) => ({
+            id: (Date.now() + index).toString(),
+            content: line
+        }))
+
+        setCase(newCases)
+
+        if(activeTab >= newCases.length){
+            setActiveTab(Math.max(0, newCases.length-1))
+        }
+    }
 
     // test case CRUD
     const deleteTestCase = (index: string) => {
@@ -87,16 +116,17 @@ export function useProblemController() {
  
 
     return {
-        code,
-        setCode,
-        language,
-        setLanguage,
+        code, setCode,
+        language, setLanguage,
         isRunning,
         results,
-        runCode,
-        cases, activeTab, setActiveTab,
-        deleteTestCase, updateTestCase, addTestCase,
+        cases, 
+        activeTab, setActiveTab,
+       
         activeTestView, setActiveTestView,
-        statusColor: getStatusColor(results?.status)
+        runCode,
+        statusColor: getStatusColor(results?.status),
+        getRawCases, setCasesFromRaw,
+        deleteTestCase, updateTestCase, addTestCase
     }
 }

@@ -10,7 +10,14 @@
     padding-right: 19px;
     border-top: 2px solid var(--gray-border-color);
 }
-
+.testcase-header{
+    margin-top: 5px;
+    margin-bottom: -35px;
+    display: flex;
+    gap: 5px;
+    justify-content: right;
+    padding-right: 5px;
+}
 .buttons-group {
     display: flex;
     flex-direction: row;
@@ -96,8 +103,33 @@
     overflow-y: scroll;
     border-radius: 15px;
     padding-bottom: 10px;
+
 }
 
+.raw-testcase-container{
+    background-color: var(--problem-view-background);
+    height: 135px;
+    padding-left: 17px;
+    padding-right: 17px;
+    overflow-y: scroll;
+    border-radius: 15px;
+    padding-bottom: 10px;
+    margin-top: 45px;
+}
+
+.testcase-header-btn{
+    background-color: transparent;
+    border-style: none;
+    color: var(--gray-border-color);
+}
+
+.testcase-header-btn:hover{
+    color: var(--content-text-color);
+}
+
+.testcase-header-btn.active{
+    color: var(--content-text-color);
+}
 .results-view {
     background-color: var(--problem-view-background);
     color: var(--content-text-color);
@@ -109,7 +141,7 @@
     padding-top: 5px;
     padding-bottom: 10px;
     margin-top: 15px;
-    height: 150px;
+    height: 161px;
 
 }
 
@@ -117,6 +149,7 @@
     color: var(--content-text-color);
     font-size: 14px;
     font-weight: var(--text-regular);
+    margin-top: 10px;
 }
 
 .testcase-input {
@@ -128,6 +161,23 @@
     border-radius: 10px;
     resize: none;
     padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    color: var(--content-text-color);
+    font-size: 14px;
+    font-weight: var(--text-light);
+}
+
+.raw-testcase-input {
+    display: block;
+    margin-top: 10px;
+    width: 101% !important;
+    background-color: transparent;
+    border-style: none;
+    border-radius: 10px;
+    resize: none;
+    padding-top: 10px;
     box-sizing: border-box;
     overflow: hidden;
 
