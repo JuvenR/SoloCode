@@ -3,36 +3,10 @@ import btnClose from '../assets/closeButton.png'
 import { useState } from 'react'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
+import type { SubmissionProps } from './SubmissionCard'
 
 
-interface SubmissionProps {
-    onClose: () => void
-}
-
-
-
-    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-`
-
-
-
-export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
-    const [isViewMore, setViewMore] = useState(false)
+export default function SubmissionCardAccepted({ onClose, submission }: SubmissionProps) {
     return (
         <>
             <div className='card-submission-container' id='green-container'>
@@ -40,23 +14,27 @@ export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
                     <strong className='card-title' id='green-title'>Accepted</strong>
                     <motion.img 
                     whileHover={{y:-4}}
-                    src={btnClose} onClick={onClose}></motion.img>
+                    src={btnClose} 
+                    onClick={onClose} 
+                    style={{cursor : 'pointer'}} />
                 </main>
+
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        666 / 666 Testcases passed
+                        {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Submitted at Nov 22, 2025 14:48
+                        Submitted at {submission.date} {submission.timestamp}
                     </p>
                 </article>
+
                 <article className='accepted-submission-details'>
                     <div className='accepted-submission-individual-info'>
                         <p className='accepted-submission-info-title'>
                             Runtime
                         </p>
                         <div className='accepted-submission-info-content'>
-                            <p> 0 ms</p>
+                            <p> {submission.runtime}</p>
                         </div>
                     </div>
 
@@ -65,7 +43,7 @@ export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
                             Memory
                         </p>
                         <div className='accepted-submission-info-content'>
-                            <p>43.78 MB</p>
+                            <p>{submission.memory}</p>
                         </div>
                     </div>
                 </article>
@@ -77,11 +55,11 @@ export default function SubmissionCardAccepted({ onClose }: SubmissionProps) {
                         </p>
                         <div className='submission-separator'></div>
                         <p className='submission-code-title'>
-                            Python
+                            {submission.language}
                         </p>
                     </div>
 
-                    <CodeContainer answerCode={answerCode} isViewMore={isViewMore} setViewMore = {setViewMore}/>
+                    <CodeContainer answerCode={submission.code}/>
                 </article>
             </div>
         </>

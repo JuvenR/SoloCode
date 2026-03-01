@@ -3,36 +3,9 @@ import btnClose from '../assets/closeButton.png'
 import { useState } from 'react'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
+import type { SubmissionProps } from './SubmissionCard'
 
-interface SubmissionProps {
-    onClose: () => void
-}
-
-
-export default function SubmissionCardMLE({ onClose }: SubmissionProps) {
-
-    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-`
-
-    const lastExecutedInput = '[1,0,0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,00000000000000000000000000000000000000000,0,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0,1]'
-    const [isViewMore, setViewMore] = useState(false)
-
-
+export default function SubmissionCardMLE({onClose, submission}: SubmissionProps) {
     return (
         <>
             <div className='card-submission-container' id='red-container'>
@@ -44,10 +17,10 @@ pruebeeeeeeee
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        100 / 666 Testcases passed
+                         {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Aubmitted at Nov 22, 2025 14:48
+                       Submitted at {submission.date} {submission.timestamp}
                     </p>
                 </article>
 
@@ -56,7 +29,7 @@ pruebeeeeeeee
                         Last Executed Input
                     </p>
                     <div className='executed-code'>
-                        {lastExecutedInput}
+                        {submission.lastExecutedInput}
                     </div>
                 </article>
 
@@ -68,11 +41,11 @@ pruebeeeeeeee
                         </p>
                         <div className='submission-separator'></div>
                         <p className='submission-code-title'>
-                            Python
+                            {submission.language}
                         </p>
                     </div>
 
-                    <CodeContainer answerCode={answerCode} isViewMore={isViewMore} setViewMore = {setViewMore}/>
+                    <CodeContainer answerCode={submission.code}/>
                 </article>
             </div>
         </>

@@ -38,6 +38,13 @@
     color: var(--title-color);
 }
 
+.empty-submissions{
+     font-size: 20px;
+    font-weight: var(--text-regular);
+    margin-bottom: 15px;
+    color: var(--gray-border-color);
+}
+
 .problem-submission{
     display: flex;
     flex-direction: column;

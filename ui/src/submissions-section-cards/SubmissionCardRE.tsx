@@ -1,44 +1,11 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
-import { useState } from 'react'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
-
-interface SubmissionProps {
-    onClose: () => void
-}
+import type { SubmissionProps } from './SubmissionCard'
 
 
-export default function SubmissionCardRE({ onClose }: SubmissionProps) {
-
-    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-`
-
-    const lastExecutedInput = '[1,0,0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,1,1,1,00000000000000000000000000000000000000000,0,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0,1]';
-    const errorMessage =
-        `java.lang.ArithmeticException: / by zero
- at line 3, Solution.prefixesDivBy5
- at line 56, __DriverSolution__.__helper__
- at line 86, __Driver__.main
- `
-
-    const [isViewMore, setViewMore] = useState(false)
-
+export default function SubmissionCardRE({ onClose, submission }: SubmissionProps) {
 
     return (
         <>
@@ -51,15 +18,15 @@ pruebeeeeeeee
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        0 / 666 Testcases passed
+                        {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Aubmitted at Nov 22, 2025 14:48
+                        Submitted at {submission.date} {submission.timestamp}
                     </p>
                 </article>
 
                 <article className='re-submission-code'>
-                    {errorMessage}
+                    {submission.errorMessage}
                 </article>
 
                 <article className='submission-last-executed-input'>
@@ -67,7 +34,7 @@ pruebeeeeeeee
                         Last Executed Input
                     </p>
                     <div className='executed-code'>
-                        {lastExecutedInput}
+                        {submission.lastExecutedInput}
                     </div>
                 </article>
 
@@ -79,11 +46,11 @@ pruebeeeeeeee
                         </p>
                         <div className='submission-separator'></div>
                         <p className='submission-code-title'>
-                            Python
+                           {submission.language}
                         </p>
                     </div>
 
-                     <CodeContainer answerCode={answerCode} isViewMore={isViewMore} setViewMore = {setViewMore}/>
+                     <CodeContainer answerCode={submission.code}/>
                 </article>
             </div>
         </>

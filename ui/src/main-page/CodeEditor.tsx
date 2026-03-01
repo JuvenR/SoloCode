@@ -2,7 +2,7 @@ import { Editor } from "@monaco-editor/react"
 import type { Monaco } from "@monaco-editor/react"
 import { motion } from 'motion/react'
 import { useRef } from "react"
-import './css/codeEditor.css'
+import '../css/codeEditor.css'
 import { loader } from "@monaco-editor/react";
 
 loader.config({

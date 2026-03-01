@@ -1,7 +1,7 @@
-import './css/testCases.css'
+import '../css/testCases.css'
 import {  motion } from 'motion/react'
-import TestCasesView from './test-cases/TestCaseView'
-import TestResultView from './test-cases/TestResultView'
+import TestCasesView from '../test-cases/TestCaseView'
+import TestResultView from '../test-cases/TestResultView'
 
 export default function RunCodeView({controller} :{controller:any}) {
     

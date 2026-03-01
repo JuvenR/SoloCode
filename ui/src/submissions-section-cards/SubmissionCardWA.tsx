@@ -1,40 +1,10 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
-import { useState } from 'react'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
+import type { SubmissionProps } from './SubmissionCard'
 
-interface SubmissionProps {
-    onClose: () => void
-}
-
-
-export default function SubmissionCardWA({ onClose }: SubmissionProps) {
-
-    const answerCode = `print('este texto es una prueba ) print('este texto es una prueba )
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-pruebeeeeeeee
-`
-
-    const input = `Hola Mundo :)`
-    const output = `undefined`
-    const expected = `[ 2 , 2 ]`
-
-    const [isViewMore, setViewMore] = useState(false)
-
+export default function SubmissionCardWA({ onClose, submission }: SubmissionProps) {
 
     return (
         <>
@@ -47,10 +17,10 @@ pruebeeeeeeee
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        500 / 666 Testcases passed
+                        {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Submitted at Nov 22, 2025 14:48
+                        Submitted at {submission.date} {submission.timestamp}
                     </p>
                 </article>
 
@@ -67,7 +37,7 @@ pruebeeeeeeee
                         Your Input
                     </p>
                     <div className='executed-code'>
-                        {input}
+                        {submission.input}
                     </div>
                 </article>
 
@@ -76,7 +46,7 @@ pruebeeeeeeee
                         Output
                     </p>
                     <div className='executed-code'>
-                        {output}
+                        {submission.output}
                     </div>
                 </article>
 
@@ -85,7 +55,7 @@ pruebeeeeeeee
                         Expected
                     </p>
                     <div className='executed-code'>
-                        {expected}
+                        {submission.expected}
                     </div>
                 </article>
 
@@ -96,11 +66,11 @@ pruebeeeeeeee
                         </p>
                         <div className='submission-separator'></div>
                         <p className='submission-code-title'>
-                            Python
+                            {submission.language}
                         </p>
                     </div>
 
-                    <CodeContainer answerCode={answerCode} isViewMore={isViewMore} setViewMore = {setViewMore}/>
+                    <CodeContainer answerCode={submission.code}/>
                 </article>
             </div>
         </>

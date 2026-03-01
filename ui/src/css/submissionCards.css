@@ -161,6 +161,8 @@
     box-sizing: border-box;
     flex: 1;
     max-height: 200px;
+    margin-top: -10px;
+    font-weight: var(--text-light);
 }
 
 .submission-code-answer.expanded {
@@ -218,10 +220,11 @@
     background-color: #70343464;
     border-radius: 15px;
     white-space: pre-wrap;
-    padding-left: 40px;
+    padding-left: 25px;
     padding-top: 20px;
     padding-bottom: 20px;
     color: var(--red-solid-color);
+    font-size: 13px;
 }
 
 .accepted-submission-info-content {
@@ -248,6 +251,9 @@
     color: var(--content-text-color);
     font-size: 13px;
     font-weight: var(--text-light);
+    word-break: break-all;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .submission-last-executed-output {
@@ -293,8 +299,9 @@
     border-radius: 15px;
     white-space: pre-wrap;
     padding-left: 25px;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     color: var(--red-solid-color);
     font-size: 13px;
+  
 }

@@ -8,11 +8,21 @@ import SubmissionCardWA from './SubmissionCardWA'
 import SubmissionCardTLE from './SubmissionCardTLE'
 import SubmissionCardMLE from './SubmissionCardMLE'
 import SubmissionCardRE from './SubmissionCardRE'
-import type {Submission} from '../UseSubmissionsController'
+import type {Submission} from '../controllers/UseSubmissionsController'
 
-export default function SubmissionCard({ id, status, date, language, memory, runtime }: Submission) {
+export interface SubmissionProps {
+    onClose: () => void
+    submission: Submission
 
-    const isSubmissionAccepted =status ?.toLowerCase() === 'accepted'
+}
+
+interface SubmissionCardProps {
+    submission: Submission
+}
+
+export default function SubmissionCard({submission} : SubmissionCardProps) {
+
+    const isSubmissionAccepted =submission.status ?.toLowerCase() === 'accepted'
     const submissionColor = isSubmissionAccepted ? 'green' : 'red'
 
     const [isOpen, setIsOpen] = useState(false);
@@ -23,27 +33,27 @@ export default function SubmissionCard({ id, status, date, language, memory, run
 
     const submissionCardType = () => {
 
-        switch (status) {
+        switch (submission.status) {
             case 'accepted':
-                return <SubmissionCardAccepted onClose={() => setIsOpen(false)} />
+                return <SubmissionCardAccepted submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'compile_error':
-                return <SubmissionCardCompileError onClose={() => setIsOpen(false)} />
+                return <SubmissionCardCompileError submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'output_limit_exceeded':
-                return <SubmissionCardOLE onClose={() => setIsOpen(false)} />
+                return <SubmissionCardOLE submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'wrong_answer':
-                return <SubmissionCardWA onClose={() => setIsOpen(false)} />
+                return <SubmissionCardWA submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'time_limit_exceeded':
-                return <SubmissionCardTLE onClose={() => setIsOpen(false)} />
+                return <SubmissionCardTLE submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'memory_limit_exceeded':
-                return <SubmissionCardMLE onClose={() => setIsOpen(false)} />
+                return <SubmissionCardMLE submission={submission} onClose={() => setIsOpen(false)} />
 
             case 'runtime_error':
-                return <SubmissionCardRE onClose={() => setIsOpen(false)} />
+                return <SubmissionCardRE submission={submission} onClose={() => setIsOpen(false)} />
         }
     }
 
@@ -59,19 +69,19 @@ export default function SubmissionCard({ id, status, date, language, memory, run
         
         <>
             <motion.div whileHover={{ y: -5 }} className='problem-submission' id={`submission-${submissionColor}`} onClick={toggleOpen}>
-                <strong className='submission-title' id={`title-${submissionColor}`}>{formattedTitle(status)}</strong>
+                <strong className='submission-title' id={`title-${submissionColor}`}>{formattedTitle(submission.status)}</strong>
                 <div className='submission-container'>
 
-                    <p className='submission-info'> {language}</p>
+                    <p className='submission-info'> {submission.language}</p>
                     <div className='submission-separator' id='card'></div>
 
-                    <p className='submission-info'> {runtime} ms</p>
+                    <p className='submission-info'> {submission.runtime} </p>
                     <div className='submission-separator' id='card'></div>
 
-                    <p className='submission-info'> {memory} MB</p>
+                    <p className='submission-info'> {submission.memory} </p>
                     <div className='submission-separator' id='card'></div>
 
-                    <p className='submission-info'>{date}</p>
+                    <p className='submission-info'>{submission.date}</p>
 
                 </div>
             </motion.div>
