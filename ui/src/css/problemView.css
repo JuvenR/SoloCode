@@ -1,49 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-:root {
-    --problem-view-background: #27293C;
-    --title-color: #FFFFFF;
-    --content-text-color: #E9EBF4;
-    --light-gray-color: #575971;
-    --gray-color: #3C3E53;
-    --gray-border-color: #6F7494;
-
-    --green-background-color: #73b09979;
-    --green-solid-color: #7AC7B5;
-    --yellow-background-color: #645C4B;
-    --yellow-solid-color: #F2D98D;
-    --red-background-color: #5D3541;
-    --red-solid-color: #D97979;
-
-
-    --text-light: 200;
-    --text-regular: 300;
-    --text-medium: 400;
-    --text-semibold: 600;
-    --text-bold: 700;
-
-    --dark-gray-background: #232433;
-
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--problem-view-background);
-}
 
 /* upper tabs styles */
 
 .tabs-group {
     display: flex;
     flex-direction: row;
-    width: 511px;
+    width: 507px;
     height: 60px;
     justify-content: center;
     padding-top: 2px;
-   
+   gap: 12px;
     
 }
 
 .tabs-group button {
     flex: 1;
-    background-color: #1c1d27d9;
+    background-color: var(--dark-gray);
     border: none;
     color: var(--title-color);
     font-weight: var(--text-semibold);
@@ -59,13 +31,14 @@
     margin-right: -20px;
     border-top-left-radius: 8px;
     padding-right: 20px;
+    clip-path: polygon(0 0, 100% 0, 90% 90%, 0 90%);
 }
 
 .submissions-button {
     margin-left: -20px;
     border-top-right-radius: 8px;
     padding-left: 20px;
-    
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
 }
 
 
@@ -86,7 +59,7 @@
     right: 0;
     width: 12%;
     height: 83%;
-    background: linear-gradient(64deg, 
+    background: linear-gradient(65deg, 
                 transparent calc(50% - 1px), 
                 var(--gray-border-color) calc(10%),
                 var(--gray-border-color) calc(52%),
@@ -104,6 +77,7 @@
     z-index: 10;
 }
 
+
 .submissions-button.active::after {
     content: '';
     position: absolute;
@@ -118,6 +92,8 @@
                 transparent calc(50% + 1.5px));
    
 }
+
+
 /* problem description styles */
 
 .problem-container {
@@ -143,7 +119,7 @@
 .problem-main {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 25px;
     margin-left: 41px;
     margin-right: 55px;
 }
