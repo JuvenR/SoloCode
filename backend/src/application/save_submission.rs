@@ -13,9 +13,10 @@ impl SaveSubmissionUseCase {
         Self { submission_repo }
     }
 
-    pub fn execute(&self, submission: Submission) -> Result<(), ApplicationError> {
+    pub async fn execute(&self, submission: Submission) -> Result<(), ApplicationError> {
         self.submission_repo
             .save(&submission)
+            .await
             .map_err(ApplicationError::from)?;
 
         Ok(())

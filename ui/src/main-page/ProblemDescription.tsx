@@ -4,8 +4,8 @@ import btnBack from '../assets/backButton.png'
 import btnNext from '../assets/nextButton.png'
 import { motion } from 'motion/react'
 import ReactMarkdown from 'react-markdown'
-import type { ProblemDescriptionProps } from './ProblemView'
 import { useEffect, useRef } from 'react'
+import type { ProblemDTO } from '../services/ProblemService'
 
 // manages different problem difficulties
 function DifficultyBadge({ problemDifficulty }: { problemDifficulty: string }) {
@@ -67,6 +67,12 @@ function ProblemExample({ title, input, output, explanation }: ProblemExamplePro
     )
 }
 
+interface ProblemDescriptionProps {
+    currentProblem: ProblemDTO
+    handleNext: () => void
+    handleBack: () => void
+}
+
 
 export default function ProblemDescription({ currentProblem, handleNext, handleBack }: ProblemDescriptionProps) {
 
@@ -102,8 +108,8 @@ export default function ProblemDescription({ currentProblem, handleNext, handleB
                         <div className='problem-description-content'>
                             <ReactMarkdown
                                 components={{
-                                    p: ({ node, ...props }) => <p style={{ marginTop: '10px', marginBottom: '10px', lineHeight: '1.6' }} {...props} />,
-                                    code: ({ node, ...props }) => (
+                                    p: ({ ...props }) => <p style={{ marginTop: '10px', marginBottom: '10px', lineHeight: '1.6' }} {...props} />,
+                                    code: ({ ...props }) => (
                                         <code
                                             style={{
                                                 backgroundColor: 'var(--dark-gray-background)',
@@ -116,7 +122,7 @@ export default function ProblemDescription({ currentProblem, handleNext, handleB
                                             {...props}
                                         />
                                     ),
-                                    strong: ({ node, ...props }) => (
+                                    strong: ({ ...props }) => (
                                         <strong
                                             style={{
                                                 fontFamily: 'inherit',  
@@ -160,4 +166,3 @@ export default function ProblemDescription({ currentProblem, handleNext, handleB
         </>
     )
 }
-

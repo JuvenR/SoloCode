@@ -11,12 +11,9 @@ impl PythonWasmRunner {
 
     pub fn execute(
         &self,
-        config: &SubmissionExecutionConfig,
-        test: &TestCase,
-    ) -> Result<ExecutionResult, DomainError> 
-    {
-     Err(DomainError::InvalidState(
-        "not implemented".into(),
-    ))
+        _config: &SubmissionExecutionConfig,
+        _test: &TestCase,
+    ) -> Result<ExecutionResult, DomainError> {
+        Err(DomainError::InvalidState("not implemented".into()))
     }
 }

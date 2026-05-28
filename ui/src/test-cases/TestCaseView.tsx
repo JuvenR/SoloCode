@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useEffect, useState } from 'react'
+import type { ProblemCase, ProblemController } from '../controllers/UseProblemController'
 
 interface TestCaseProps {
     number: string,
@@ -104,7 +105,7 @@ function RawTestCaseContent({ content, onChange }: TestCaseContentProps) {
     )
 }
 
-export default function TestCasesView({ controller }: { controller: any }) {
+export default function TestCasesView({ controller }: { controller: ProblemController }) {
     const [viewMode, setViewMode] = useState<'list' | 'code'>('list')
 
 
@@ -133,7 +134,7 @@ export default function TestCasesView({ controller }: { controller: any }) {
                         <motion.div key='list-view'>
                             <nav className='cases-container'>
                                 <AnimatePresence mode='popLayout'>
-                                    {controller.cases.map((test: any, i: number) => (
+                                    {controller.cases.map((test: ProblemCase, i: number) => (
                                         <motion.div
                                             key={test.id}
                                             layout

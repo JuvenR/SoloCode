@@ -13,30 +13,38 @@ export interface ProblemViewProps{
   setCurrentIndex: (index:number) => void
 }
 
-export default function ProblemPage() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const currentProblem = mockProblems[currentIndex]
+function ProblemWorkspace({ currentIndex, currentProblem, setCurrentIndex }: ProblemViewProps) {
   const controller = useProblemController(currentProblem.id)
 
   return (
-
     <main className='main-app'>
       <div className='app-problem-view'>
         <ProblemView currentIndex={currentIndex} currentProblem={currentProblem} setCurrentIndex={setCurrentIndex}/>
       </div>
       <aside className='code-run'>
         <div className='app-code-editor'>
-          <CodeEditor
-            controller={controller} />
+          <CodeEditor controller={controller} />
         </div>
         <div className='run-code-area'>
-          <RunCodeView 
-          controller={controller}/>
+          <RunCodeView controller={controller} />
         </div>
       </aside>
     </main>
   )
 }
 
+export default function ProblemPage() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const currentProblem = mockProblems[currentIndex]
+
+  return (
+    <ProblemWorkspace
+      key={currentProblem.id}
+      currentIndex={currentIndex}
+      currentProblem={currentProblem}
+      setCurrentIndex={setCurrentIndex}
+    />
+  )
+}
 
 

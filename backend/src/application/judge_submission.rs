@@ -1,9 +1,6 @@
-use crate::domain::ports::ExecutionEngine;
-use crate::domain::ports::repositories::{
-    ProblemRepository,
-    SubmissionRepository,
-};
 use crate::application::errors::ApplicationError;
+use crate::domain::ports::ExecutionEngine;
+use crate::domain::ports::repositories::{ProblemRepository, SubmissionRepository};
 
 use std::sync::Arc;
 
@@ -26,9 +23,11 @@ impl JudgeSubmissionUseCase {
         }
     }
 
-    pub fn execute(&self)
-        -> Result<(), ApplicationError>
-    {
+    pub async fn execute(&self) -> Result<(), ApplicationError> {
+        let _ = &self.submission_repo;
+        let _ = &self.problem_repo;
+        let _ = &self.engine;
+
         // cargar submission
         // cargar programa
         // construir el config
