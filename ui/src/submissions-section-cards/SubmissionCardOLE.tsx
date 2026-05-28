@@ -1,6 +1,5 @@
 import '../css/submissionCards.css'
 import btnClose from '../assets/closeButton.png'
-import { useState } from 'react'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
 import type { SubmissionProps } from './SubmissionCard'

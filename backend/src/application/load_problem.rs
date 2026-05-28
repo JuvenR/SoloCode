@@ -1,5 +1,5 @@
-use crate::domain::ports::repositories::ProblemRepository;
 use crate::application::errors::ApplicationError;
+use crate::domain::ports::repositories::ProblemRepository;
 
 use std::sync::Arc;
 use uuid::Uuid;
@@ -13,12 +13,15 @@ impl LoadProblemUseCase {
         Self { problem_repo }
     }
 
-    pub fn execute(&self, problem_id: Uuid)
-        -> Result<crate::domain::entities::Problem, ApplicationError>
-    {
-        let problem = self.problem_repo
+    pub async fn execute(
+        &self,
+        problem_id: Uuid,
+    ) -> Result<crate::domain::entities::Problem, ApplicationError> {
+        let problem = self
+            .problem_repo
             .get(problem_id)
-            .map_err(ApplicationError::from)?; 
+            .await
+            .map_err(ApplicationError::from)?;
 
         Ok(problem)
     }

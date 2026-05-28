@@ -2,7 +2,7 @@ import ProblemDescription from './ProblemDescription'
 import ProblemSubmissions from '../submissions-section-cards/ProblemSubmissions'
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { mockProblems, type ProblemDTO } from '../services/ProblemService'
+import { mockProblems } from '../services/ProblemService'
 import { useSubmissionController } from '../controllers/UseSubmissionsController'
 import type { ProblemViewProps } from './ProblemPage'
 
@@ -37,15 +37,7 @@ function ProblemTabs({ activeTab, onTabChange }: ProblemTabsProps) {
 
 }
 
-export interface ProblemDescriptionProps{
-    currentProblem: ProblemDTO
-    handleNext: () => void
-    handleBack: () => void
-
-
-}
-
-export default function problemView({currentIndex, currentProblem, setCurrentIndex}:ProblemViewProps) {
+export default function ProblemView({currentIndex, currentProblem, setCurrentIndex}:ProblemViewProps) {
     const [activeTab, setActiveTab] = useState('description')
 
     
