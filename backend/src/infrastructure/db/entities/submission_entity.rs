@@ -1,6 +1,6 @@
+use sea_orm::JsonValue;
 use sea_orm::entity::prelude::*;
 use uuid::Uuid;
-use sea_orm::JsonValue;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "submissions")]

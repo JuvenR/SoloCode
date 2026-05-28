@@ -1,7 +1,7 @@
 use crate::domain::entities::ExecutionResult;
 use crate::domain::entities::TestCase;
-use crate::domain::value_objects::SubmissionExecutionConfig;
 use crate::domain::errors::DomainError;
+use crate::domain::value_objects::SubmissionExecutionConfig;
 
 pub trait ExecutionEngine {
     fn execute_test(

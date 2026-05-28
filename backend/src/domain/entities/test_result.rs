@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::domain::entities::ExecutionResult;
 use crate::domain::errors::DomainError;
@@ -11,11 +11,7 @@ pub struct TestResult {
 }
 
 impl TestResult {
-    pub fn from_execution(
-        index: usize,
-        execution: ExecutionResult,
-        expected_output: &str,
-    ) -> Self {
+    pub fn from_execution(index: usize, execution: ExecutionResult, expected_output: &str) -> Self {
         let is_passed = execution.stdout.trim() == expected_output.trim();
 
         Self {
