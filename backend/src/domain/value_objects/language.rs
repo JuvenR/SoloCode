@@ -5,6 +5,7 @@ use std::{fmt, str::FromStr};
 pub enum Language {
     Rust,
     Python,
+    JavaScript,
     Java,
     Cpp,
     C,
@@ -15,6 +16,7 @@ impl Language {
         match self {
             Language::Rust => "rust",
             Language::Python => "python",
+            Language::JavaScript => "javascript",
             Language::Java => "java",
             Language::Cpp => "cpp",
             Language::C => "c",
@@ -35,10 +37,30 @@ impl FromStr for Language {
         match value.trim().to_ascii_lowercase().as_str() {
             "rust" => Ok(Language::Rust),
             "python" => Ok(Language::Python),
-            "java" | "javascript" | "js" => Ok(Language::Java),
+            "javascript" | "js" => Ok(Language::JavaScript),
+            "java" => Ok(Language::Java),
             "cpp" | "c++" => Ok(Language::Cpp),
             "c" => Ok(Language::C),
             other => Err(format!("Unsupported language: {other}")),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Language;
+    use std::str::FromStr;
+
+    #[test]
+    fn javascript_aliases_parse_to_javascript() {
+        assert_eq!(Language::from_str("javascript"), Ok(Language::JavaScript));
+        assert_eq!(Language::from_str("js"), Ok(Language::JavaScript));
+        assert_eq!(Language::JavaScript.as_str(), "javascript");
+    }
+
+    #[test]
+    fn java_stays_distinct_from_javascript() {
+        assert_eq!(Language::from_str("java"), Ok(Language::Java));
+        assert_eq!(Language::Java.as_str(), "java");
     }
 }

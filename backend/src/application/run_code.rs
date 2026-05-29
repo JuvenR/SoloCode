@@ -18,9 +18,9 @@ impl RunCodeUseCase {
         &self,
         config: SubmissionExecutionConfig,
         test: TestCase,
-    ) -> Result<ExecutionResult, ApplicationError>
-    {
-        let result = self.engine
+    ) -> Result<ExecutionResult, ApplicationError> {
+        let result = self
+            .engine
             .execute_test(&config, &test)
             .map_err(ApplicationError::from)?;
 
