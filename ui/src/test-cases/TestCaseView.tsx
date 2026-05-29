@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useRef, useEffect, useState } from 'react'
+import { useCallback, useRef, useEffect, useState } from 'react'
 import type { ProblemCase, ProblemController } from '../controllers/UseProblemController'
 
 interface TestCaseProps {
@@ -11,6 +11,13 @@ interface TestCaseProps {
 }
 
 interface TestCaseContentProps {
+    content: string,
+    expectedOutput?: string,
+    onChange: (newValue: string) => void
+    onExpectedChange: (newValue: string) => void
+}
+
+interface RawTestCaseContentProps {
     content: string,
     onChange: (newValue: string) => void
 }
@@ -42,20 +49,25 @@ function TestCase({ number, isActive, onClick, onDelete, canDelete }: TestCasePr
     )
 }
 
-function TestCaseContent({ content, onChange }: TestCaseContentProps) {
+function TestCaseContent({ content, expectedOutput, onChange, onExpectedChange }: TestCaseContentProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const expectedTextareaRef = useRef<HTMLTextAreaElement>(null)
 
-    const resize = () => {
-        const textarea = textareaRef.current
+    const resizeTextArea = (textarea: HTMLTextAreaElement | null) => {
         if (textarea) {
             textarea.style.height = 'auto'
             textarea.style.height = `${textarea.scrollHeight}px`
         }
     }
 
+    const resize = useCallback(() => {
+        resizeTextArea(textareaRef.current)
+        resizeTextArea(expectedTextareaRef.current)
+    }, [])
+
     useEffect(() => {
         resize()
-    }, [content])
+    }, [content, expectedOutput, resize])
 
     return (
         <>
@@ -70,11 +82,22 @@ function TestCaseContent({ content, onChange }: TestCaseContentProps) {
                     onInput={resize}
                 ></textarea>
             </article>
+            <article className='testcase-container'>
+                <p className='testcase-title'>Expected Output</p>
+                <textarea
+                    className='testcase-input'
+                    ref={expectedTextareaRef}
+                    value={expectedOutput || ""}
+                    onChange={(e) => onExpectedChange(e.target.value)}
+                    spellCheck='false'
+                    onInput={resize}
+                ></textarea>
+            </article>
         </>
     )
 }
 
-function RawTestCaseContent({ content, onChange }: TestCaseContentProps) {
+function RawTestCaseContent({ content, onChange }: RawTestCaseContentProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
 
     const resize = () => {
@@ -163,7 +186,9 @@ export default function TestCasesView({ controller }: { controller: ProblemContr
                             <TestCaseContent
                                 key={controller.cases[controller.activeTab]?.id || 'empty'}
                                 content={controller.cases[controller.activeTab]?.content || ""}
+                                expectedOutput={controller.cases[controller.activeTab]?.expectedOutput}
                                 onChange={controller.updateTestCase}
+                                onExpectedChange={controller.updateExpectedOutput}
                             />
                         </motion.div>
                     ) : (

@@ -1,4 +1,4 @@
-import type { ExecutionResult } from '../controllers/UseProblemController'
+import type { ExecutionResult } from '../runners/types'
 import { easeIn, motion } from 'motion/react';
 
 interface TestResultViewProps {

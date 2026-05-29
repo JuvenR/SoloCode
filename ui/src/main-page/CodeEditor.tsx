@@ -22,8 +22,8 @@ interface EditorLanguageProps {
 
 // mapping object to create a boilerplate for each language
 const CODE_LANGUAGES: Record<EditorLanguage, string> = {
-    javascript: '// hello world from JS',
-    python: '# hello world from Python',
+    javascript: '// JavaScript runtime is not supported yet in the MVP.',
+    python: 'class Solution:\n    def twoSum(self, nums, target):\n        return [0, 1]',
     cpp: '// hello world from C++'
 }
 
@@ -70,7 +70,7 @@ export default function CodeEditor({ controller }: { controller: ProblemControll
         languageEntries.forEach(([languageName, code]) => {
             modelsRef.current[languageName] = monaco.editor.createModel(code, languageName)
         })
-        const initialModel = modelsRef.current['javascript']
+        const initialModel = modelsRef.current[controller.language]
         if (initialModel) {
             editor.setModel(initialModel)
             controller.setCode(initialModel.getValue())

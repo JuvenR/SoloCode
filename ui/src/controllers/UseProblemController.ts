@@ -1,30 +1,13 @@
-import { useMemo, useState } from "react";
-
-type SubmissionStatus =
-    | "accepted"
-    | "wrong_answer"
-    | "compile_error"
-    | "runtime_error"
-    | "time_limit_exceeded"
-    | "output_limit_exceeded"
-    | "memory_limit_exceeded";
+import { useEffect, useMemo, useState } from "react";
+import { PythonPyodideRunner } from "../runners/python/PythonPyodideRunner";
+import type { ExecutionResult } from "../runners/types";
 
 export type EditorLanguage = "javascript" | "python" | "cpp";
-
-export interface ExecutionResult {
-    status: SubmissionStatus;
-    runtime?: string;
-    memory?: string;
-    output?: string;
-    expected?: string;
-    input?: string;
-    errorMessage?: string;
-    lastExecutedInput?: string;
-}
 
 export interface ProblemCase {
     id: string;
     content: string;
+    expectedOutput?: string;
 }
 
 export interface ProblemController {
@@ -45,6 +28,7 @@ export interface ProblemController {
     setCasesFromRaw: (text: string) => void;
     deleteTestCase: (id: string) => void;
     updateTestCase: (value: string) => void;
+    updateExpectedOutput: (value: string) => void;
     addTestCase: () => void;
 }
 
@@ -58,9 +42,9 @@ function getInitialCases(problemId: number): ProblemCase[] {
     switch (problemId) {
         case 1:
             return [
-                { id: "1", content: "nums = [2,7,11,15]\ntarget = 9" },
-                { id: "2", content: "nums = [3,2,4]\ntarget = 6" },
-                { id: "3", content: "nums = [3,3]\ntarget = 6" },
+                { id: "1", content: "nums = [2,7,11,15]\ntarget = 9", expectedOutput: "[0,1]" },
+                { id: "2", content: "nums = [3,2,4]\ntarget = 6", expectedOutput: "[1,2]" },
+                { id: "3", content: "nums = [3,3]\ntarget = 6", expectedOutput: "[0,1]" },
             ];
         case 3:
             return [
@@ -83,13 +67,18 @@ function getInitialCases(problemId: number): ProblemCase[] {
 }
 
 export function useProblemController(currentProblemId: number): ProblemController {
-    const [language, setLanguage] = useState<EditorLanguage>("javascript");
+    const pythonRunner = useMemo(() => new PythonPyodideRunner(), []);
+    const [language, setLanguage] = useState<EditorLanguage>("python");
     const [isRunning, setIsRunning] = useState(false);
     const [code, setCode] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [activeTestView, setActiveTestView] = useState<"testcases" | "results">("testcases");
     const [results, setResults] = useState<ExecutionResult | null>(null);
     const [cases, setCase] = useState<ProblemCase[]>(() => getInitialCases(currentProblemId));
+
+    useEffect(() => {
+        return () => pythonRunner.dispose();
+    }, [pythonRunner]);
 
     const getRawCases = useMemo(() => {
         return cases.map((problemCase) => problemCase.content).join("\n---\n");
@@ -106,6 +95,7 @@ export function useProblemController(currentProblemId: number): ProblemControlle
         const newCases = blocks.map((block, index) => ({
             id: cases[index]?.id || (Date.now() + index).toString(),
             content: block,
+            expectedOutput: cases[index]?.expectedOutput,
         }));
 
         setCase(newCases);
@@ -140,8 +130,19 @@ export function useProblemController(currentProblemId: number): ProblemControlle
         setCase(updatedCases);
     };
 
+    const updateExpectedOutput = (newValue: string) => {
+        const updatedCases = cases.map((item, index) => {
+            if (index === activeTab) {
+                return { ...item, expectedOutput: newValue };
+            }
+            return item;
+        });
+
+        setCase(updatedCases);
+    };
+
     const addTestCase = () => {
-        const newCase = { id: Date.now().toString(), content: "" };
+        const newCase = { id: Date.now().toString(), content: "", expectedOutput: "" };
         const newCases = [...cases, newCase];
         setCase(newCases);
         setActiveTab(newCases.length - 1);
@@ -150,12 +151,36 @@ export function useProblemController(currentProblemId: number): ProblemControlle
     const runCode = async () => {
         setIsRunning(true);
         setActiveTestView("results");
-        console.log(`running testcase on ${language}`, code);
 
-        setTimeout(() => {
-            setResults({ status: "accepted", output: "[1,2,3]", runtime: "0", memory: "43.78" });
+        try {
+            if (language !== "python") {
+                setResults({
+                    status: "runtime_error",
+                    errorMessage: `${language} execution is not supported yet. The MVP runner currently supports Python via Pyodide.`,
+                });
+                return;
+            }
+
+            const result = await pythonRunner.run({
+                problemId: currentProblemId,
+                code,
+                testCases: cases.map((problemCase) => ({
+                    id: problemCase.id,
+                    input: problemCase.content,
+                    expectedOutput: problemCase.expectedOutput,
+                })),
+                timeoutMs: 3000,
+            });
+
+            setResults(result);
+        } catch (error) {
+            setResults({
+                status: "runtime_error",
+                errorMessage: error instanceof Error ? error.message : String(error),
+            });
+        } finally {
             setIsRunning(false);
-        }, 500);
+        }
     };
 
     return {
@@ -176,6 +201,7 @@ export function useProblemController(currentProblemId: number): ProblemControlle
         setCasesFromRaw,
         deleteTestCase,
         updateTestCase,
+        updateExpectedOutput,
         addTestCase,
     };
 }
