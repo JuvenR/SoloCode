@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::domain::errors::DomainError;
 use crate::domain::value_objects::{ExecutionMode, Language};
@@ -31,9 +31,7 @@ impl SubmissionExecutionConfig {
 
     pub fn validate(&self) -> Result<(), DomainError> {
         if self.code.trim().is_empty() {
-            return Err(DomainError::Validation(
-                "Submission cannot be empty".into(),
-            ));
+            return Err(DomainError::Validation("Submission cannot be empty".into()));
         }
 
         if self.time_limit_ms == 0 {

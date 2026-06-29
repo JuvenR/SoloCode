@@ -1,9 +1,11 @@
 import { Editor } from "@monaco-editor/react"
 import type { Monaco } from "@monaco-editor/react"
+import type { editor as MonacoEditor } from "monaco-editor"
 import { motion } from 'motion/react'
 import { useRef } from "react"
 import '../css/codeEditor.css'
 import { loader } from "@monaco-editor/react";
+import type { EditorLanguage, ProblemController } from "../controllers/UseProblemController"
 
 loader.config({
   paths: {
@@ -11,27 +13,27 @@ loader.config({
   },
 });
 
-interface editorLanguageProps {
-    language: string,
-    setLanguage: (language: string) => void,
+interface EditorLanguageProps {
+    language: EditorLanguage,
+    setLanguage: (language: EditorLanguage) => void,
     onRun: () => void,
     isLoading: boolean
 }
 
 // mapping object to create a boilerplate for each language
-const CODE_LANGUAGES: Record<string, string> = {
-    javascript: '// hello world from JS',
-    python: '# hello world from Python',
+const CODE_LANGUAGES: Record<EditorLanguage, string> = {
+    javascript: '// JavaScript runtime is not supported yet in the MVP.',
+    python: 'class Solution:\n    def twoSum(self, nums, target):\n        return [0, 1]',
     cpp: '// hello world from C++'
 }
 
-function CodeEditorHeader({ language, setLanguage, onRun, isLoading }: editorLanguageProps) {
+function CodeEditorHeader({ language, setLanguage, onRun, isLoading }: EditorLanguageProps) {
 
     return (
         <>
             <main className="main-header">
                 <div>
-                    <select className="cbx-languages" value={language} onChange={(e) => setLanguage(e.target.value)} >
+                    <select className="cbx-languages" value={language} onChange={(e) => setLanguage(e.target.value as EditorLanguage)} >
                         <option className="op-language" value='javascript'>Javascript</option>
                         <option className="op-language" value='python'>Python</option>
                         <option className="op-language" value='cpp'>C++</option>
@@ -54,30 +56,35 @@ function CodeEditorHeader({ language, setLanguage, onRun, isLoading }: editorLan
     )
 }
 
-export default function CodeEditor({ controller }: { controller: any }) {
+export default function CodeEditor({ controller }: { controller: ProblemController }) {
 
     // monaco model with useRef hook to save references for each code written and re-render the editor component
-    const modelsRef = useRef<Record<string, any>>({})
-    const editorRef = useRef<any>(null)
+    const modelsRef = useRef<Partial<Record<EditorLanguage, MonacoEditor.ITextModel>>>({})
+    const editorRef = useRef<MonacoEditor.IStandaloneCodeEditor | null>(null)
 
-    const handleEditorDidMount = (editor: any, monaco: Monaco) => {
+    const handleEditorDidMount = (editor: MonacoEditor.IStandaloneCodeEditor, monaco: Monaco) => {
         editorRef.current = editor
 
         // physical model in the monaco memory per language
-        Object.entries(CODE_LANGUAGES).forEach(([languageName, code]) => {
+        const languageEntries = Object.entries(CODE_LANGUAGES) as [EditorLanguage, string][]
+        languageEntries.forEach(([languageName, code]) => {
             modelsRef.current[languageName] = monaco.editor.createModel(code, languageName)
         })
-        const initialModel = modelsRef.current['javascript']
-        editor.setModel(initialModel)
-        controller.setCode(initialModel.getValue())
+        const initialModel = modelsRef.current[controller.language]
+        if (initialModel) {
+            editor.setModel(initialModel)
+            controller.setCode(initialModel.getValue())
+        }
     }
 
-    const changeLanguage = (languageChanged: string) => {
+    const changeLanguage = (languageChanged: EditorLanguage) => {
         controller.setLanguage(languageChanged)
         if (editorRef.current && modelsRef.current[languageChanged]) {
             const newModel = modelsRef.current[languageChanged]
-            editorRef.current.setModel(newModel)
-            controller.setCode(newModel.getValue())
+            if (newModel) {
+                editorRef.current.setModel(newModel)
+                controller.setCode(newModel.getValue())
+            }
         }
     }
 

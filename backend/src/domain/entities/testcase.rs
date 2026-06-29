@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use crate::domain::errors::DomainError;
@@ -41,5 +41,22 @@ impl TestCase {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::TestCase;
+
+    #[test]
+    fn validate_rejects_zero_timeout() {
+        let testcase = TestCase::new("input".into(), "output".into(), 0);
+        assert!(testcase.validate().is_err());
+    }
+
+    #[test]
+    fn validate_accepts_valid_testcase() {
+        let testcase = TestCase::new("input".into(), "output".into(), 1000);
+        assert!(testcase.validate().is_ok());
     }
 }
