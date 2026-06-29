@@ -5,7 +5,7 @@
 .tabs-group {
     display: flex;
     flex-direction: row;
-    width: 507px;
+    width: 100%;
     height: 60px;
     justify-content: center;
     padding-top: 2px;
@@ -15,6 +15,7 @@
 
 .tabs-group button {
     flex: 1;
+    min-width: 0;
     background-color: var(--dark-gray);
     border: none;
     color: var(--title-color);
@@ -100,8 +101,8 @@
     background-color: var(--problem-view-background);
     border: 2px solid var(--gray-border-color);
     border-radius: 13px;
-    width: 507px;
-    height: 90vh;
+    width: 100%;
+    height: calc(100vh - 55px);
     overflow-y: scroll;
     margin-top: -12px;
 
@@ -122,6 +123,7 @@
     margin-top: 25px;
     margin-left: 41px;
     margin-right: 55px;
+    min-width: 0;
 }
 
 .problem-title {
@@ -233,6 +235,7 @@
 .example-container {
     display: flex;
     gap: 9px;
+    min-width: 0;
 }
 
 .example-sidebar {
@@ -255,6 +258,7 @@
     font-size: 13px;
     font-weight: var(--text-light);
    margin-top: -2px;
+   overflow-wrap: anywhere;
 }
 
 .example-content ul {
@@ -264,4 +268,48 @@
 .example-content strong {
     font-weight: var(--text-semibold);
 
+}
+
+.problem-description,
+.problem-description-content,
+.example-main {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+    .problem-container {
+        height: auto;
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 520px) {
+    .tabs-group {
+        height: 54px;
+        gap: 8px;
+    }
+
+    .tabs-group button {
+        font-size: 15px;
+        padding-top: 8px;
+        padding-bottom: 17px;
+    }
+
+    .problem-container {
+        max-height: none;
+    }
+
+    .problem-main {
+        margin-left: 22px;
+        margin-right: 24px;
+    }
+
+    .problem-title {
+        font-size: 22px;
+    }
+
+    .problem-footer {
+        gap: 30px;
+    }
 }

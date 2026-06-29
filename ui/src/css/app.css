@@ -3,6 +3,18 @@
     box-sizing: border-box;
 
 }
+
+html,
+body,
+#root {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: var(--problem-view-background);
+}
+
 :root {
     --problem-view-background: #27293C;
     --title-color: #FFFFFF;
@@ -34,12 +46,14 @@
 
 .main-app{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: minmax(320px, 507px) minmax(0, 930px);
     gap: 10px;
-    margin-left: 3px;
-    margin-right: 3px;
-
-    overflow: hidden !important;
+    width: 100%;
+    max-width: 1450px;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 0 3px;
+    overflow: hidden;
 
 }
 
@@ -47,4 +61,53 @@
     display: flex;
     flex-direction: column;
     gap:10px;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.run-code-area {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.app-problem-view,
+.app-code-editor,
+.run-code-area,
+.main-container {
+    min-width: 0;
+    width: 100%;
+}
+
+@media (max-width: 1180px) {
+    .main-app {
+        grid-template-columns: minmax(300px, 42%) minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .main-app {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        padding: 0 8px 12px;
+    }
+
+    .code-run {
+        height: auto;
+    }
+
+    .run-code-area {
+        flex: none;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 520px) {
+    .main-app {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
 }

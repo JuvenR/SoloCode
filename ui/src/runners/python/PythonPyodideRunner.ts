@@ -182,55 +182,78 @@ export class PythonPyodideRunner {
         });
     }
 
-    private toExecutionResult(
-        testCases: RunnerTestCase[],
-        report: PythonHarnessReport,
-        runtimeMs: number,
-        stderr: string,
-    ): ExecutionResult {
-        if (report.kind === "compile_error") {
-            return {
-                status: "compile_error",
-                runtime: runtimeMs.toString(),
-                errorMessage: report.error,
-                lastExecutedInput: report.lastExecutedInput,
-            };
-        }
-
-        if (report.kind === "runtime_error") {
-            return {
-                status: "runtime_error",
-                runtime: runtimeMs.toString(),
-                errorMessage: [report.error, stderr].filter(Boolean).join("\n"),
-                lastExecutedInput: report.lastExecutedInput,
-            };
-        }
-
-        for (const caseResult of report.cases) {
-            const testCase = testCases.find((candidate) => candidate.id === caseResult.id);
-
-            if (!testCase?.expectedOutput) {
-                continue;
-            }
-
-            if (!this.outputsMatch(caseResult, testCase.expectedOutput)) {
-                return {
-                    status: "wrong_answer",
-                    runtime: runtimeMs.toString(),
-                    input: caseResult.input,
-                    output: this.stringifyOutput(caseResult.output),
-                    expected: testCase.expectedOutput,
-                };
-            }
-        }
-
+   private toExecutionResult(
+    testCases: RunnerTestCase[],
+    report: PythonHarnessReport,
+    runtimeMs: number,
+    stderr: string,
+): ExecutionResult {
+    if (report.kind === "compile_error") {
         return {
-            status: "accepted",
+            status: "compile_error",
             runtime: runtimeMs.toString(),
-            memory: "N/A",
-            output: report.cases.map((caseResult) => this.stringifyOutput(caseResult.output)).join("\n"),
+            errorMessage: report.error,
+            lastExecutedInput: report.lastExecutedInput,
         };
     }
+
+    if (report.kind === "runtime_error") {
+        return {
+            status: "runtime_error",
+            runtime: runtimeMs.toString(),
+            errorMessage: [report.error, stderr].filter(Boolean).join("\n"),
+            lastExecutedInput: report.lastExecutedInput,
+        };
+    }
+
+    const caseResults: Array<{ id: string; passed: boolean; input: string; output: string; expected?: string }> = [];
+    let firstFailure: { input: string; output: string; expected: string } | null = null;
+
+    for (const caseResult of report.cases) {
+        const testCase = testCases.find((candidate) => candidate.id === caseResult.id);
+        const output = this.stringifyOutput(caseResult.output);
+
+        // Sin expected → lo tratamos como passed (igual que antes)
+        if (!testCase?.expectedOutput) {
+            caseResults.push({ id: caseResult.id, passed: true, input: caseResult.input, output });
+            continue;
+        }
+
+        const passed = this.outputsMatch(caseResult, testCase.expectedOutput);
+
+        caseResults.push({
+            id: caseResult.id,
+            passed,
+            input: caseResult.input,
+            output,
+            expected: testCase.expectedOutput,
+        });
+
+        // Guardamos solo el PRIMER fallo, pero NO cortamos el loop
+        if (!passed && !firstFailure) {
+            firstFailure = { input: caseResult.input, output, expected: testCase.expectedOutput };
+        }
+    }
+
+    if (firstFailure) {
+        return {
+            status: "wrong_answer",
+            runtime: runtimeMs.toString(),
+            input: firstFailure.input,
+            output: firstFailure.output,
+            expected: firstFailure.expected,
+            caseResults,   // ⬅️ ahora trae TODOS los casos
+        };
+    }
+
+    return {
+        status: "accepted",
+        runtime: runtimeMs.toString(),
+        memory: "N/A",
+        output: report.cases.map((c) => this.stringifyOutput(c.output)).join("\n"),
+        caseResults,
+    };
+}
 
     private outputsMatch(caseResult: PythonCaseResult, expectedOutput: string): boolean {
         const actual = caseResult.output;

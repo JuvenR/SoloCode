@@ -7,6 +7,14 @@ export type SubmissionStatus =
     | "output_limit_exceeded"
     | "memory_limit_exceeded";
 
+export interface CaseResult {
+    id: string;
+    passed: boolean;
+    input: string;
+    output: string;
+    expected?: string;
+}
+
 export interface ExecutionResult {
     status: SubmissionStatus;
     runtime?: string;
@@ -16,6 +24,7 @@ export interface ExecutionResult {
     input?: string;
     errorMessage?: string;
     lastExecutedInput?: string;
+    caseResults?: CaseResult[];
 }
 
 export interface RunnerTestCase {

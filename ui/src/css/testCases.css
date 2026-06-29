@@ -1,14 +1,22 @@
 .run-main-container {
     box-sizing: border-box;
-    height: 252px;
-    width: 930px;
+    height: 97%;
+    width: 100%;
     background-color: var(--dark-gray);
     border-radius: 20px;
-    padding-top: 17px;
-    padding-bottom: 17px;
-    padding-left: 19px;
-    padding-right: 19px;
+    padding: 17px 19px;
     border-top: 2px solid var(--gray-border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;  
+    min-height: 0;   
+}
+
+.view-content {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 20px;   /* aire al final para alcanzar a ver el último elemento */
 }
 .testcase-header{
     margin-top: 5px;
@@ -49,7 +57,9 @@
     gap: 10px;
     overflow-x: scroll;
     padding-top: 20px;
+    padding-bottom: 2%;
     margin-left: 4px;
+    max-width: 100%;
 }
 
 
@@ -97,18 +107,19 @@
 
 .testcase-container {
     background-color: var(--problem-view-background);
-    height: 110px;
+    min-height: 10px;
     padding-left: 17px;
     padding-right: 17px;
     overflow-y: scroll;
     border-radius: 15px;
     padding-bottom: 10px;
+    margin-bottom: 10px;
 
 }
 
 .raw-testcase-container{
     background-color: var(--problem-view-background);
-    height: 135px;
+    min-height: 135px;
     padding-left: 17px;
     padding-right: 17px;
     overflow-y: scroll;
@@ -133,7 +144,7 @@
 .results-view {
     background-color: var(--problem-view-background);
     color: var(--content-text-color);
-    font-size: 14px;
+    font-size: 10px;
     font-weight: var(--text-regular);
     padding-left: 17px;
     padding-right: 17px;
@@ -141,7 +152,7 @@
     padding-top: 5px;
     padding-bottom: 10px;
     margin-top: 15px;
-    height: 161px;
+    min-height: 161px;
 
 }
 
@@ -188,16 +199,81 @@
 
 .result-container {
     background-color: var(--problem-view-background);
-    height: 163px;
     padding-left: 27px;
     padding-right: 17px;
-    overflow-y: scroll;
     border-radius: 15px;
     margin-top: 16px;
+    padding-bottom: 16px;
+    overflow-y:scroll;
+}
+
+.case-status-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-bottom: 4px;
+    margin-top: -7px;
+}
+
+.case-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 7px;
+    width: 100px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: var(--text-semibold);
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: none;
+    transition: opacity 0.15s;
+}
+
+.case-badge:hover { opacity: 0.8; }
+
+.case-badge.passed {
+    background-color: var(--problem-view-background);
+    border-color:var(--green-solid-color);
+    color: var(--green-solid-color);
+}
+
+
+.case-badge.failed {
+    background-color: var(--problem-view-background);
+    border-color: var(--red-solid-color);
+    color: var(--red-solid-color);
+}
+
+.case-badge.active-badge.passed { 
+    background-color: var(--green-background-color);
+}
+.case-badge.active-badge.failed { 
+    background-color: var(--red-background-color);
+}
+
+
+.case-detail-panel {
+    margin-top: 6px;
+}
+
+.case-detail-section {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: var(--text-light);
+    color: var(--content-text-color);
+}
+
+.case-detail-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: var(--content-text-color);
 }
 
 .result-title {
-    font-size: 30px;
+    font-size: 25px;
     margin-top: 16px;
     font-weight: var(--text-semibold);
 
@@ -220,7 +296,8 @@
     margin-top: -20px;
 }
 .individual-container-accepted {
-    width: 420px;
+    flex: 1;
+    min-width: 0;
     font-size: 14px;
     color: var(--content-text-color);
     font-weight: var(--text-light);
@@ -266,7 +343,7 @@
 }
 
 .detail-container{
-    width: 820px;
+    width: 100%;
     background-color: var(--dark-gray-background);
     margin-top: 10px;
     min-height: 45px;
@@ -295,4 +372,45 @@
     font-size: 14px;
     font-weight: var(--text-light);
     margin-bottom: 15px;
+}
+
+@media (max-width: 900px) {
+    .run-main-container {
+        height: auto;
+        min-height: 270px;
+    }
+}
+
+@media (max-width: 620px) {
+    .run-main-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .buttons-group {
+        gap: 10px;
+    }
+
+    .btn-test {
+        width: auto;
+        min-width: 96px;
+    }
+
+    .testcase-header {
+        margin-bottom: -28px;
+    }
+
+    .details-container-accepted {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .result-title {
+        font-size: 24px;
+    }
+
+    .individual-container-error-message {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }

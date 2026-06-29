@@ -4,14 +4,9 @@ import type { editor as MonacoEditor } from "monaco-editor"
 import { motion } from 'motion/react'
 import { useRef } from "react"
 import '../css/codeEditor.css'
-import { loader } from "@monaco-editor/react";
 import type { EditorLanguage, ProblemController } from "../controllers/UseProblemController"
 
-loader.config({
-  paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
-  },
-});
+
 
 interface EditorLanguageProps {
     language: EditorLanguage,
@@ -126,8 +121,8 @@ export default function CodeEditor({ controller }: { controller: ProblemControll
                 />
                 <div className={`code-editor-area ${controller.statusColor}`} >
                     <Editor
-                        height='430px'
-                        width='930px'
+                        height='100%'
+                        width='100%'
                         language={controller.language}
                         defaultValue={CODE_LANGUAGES[controller.language]}
                         theme='solocode-theme'

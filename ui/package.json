@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "monaco-editor": "^0.55.1",
     "motion": "^12.23.26",
     "pyodide": "^0.29.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "vite-plugin-monaco-editor": "^1.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
