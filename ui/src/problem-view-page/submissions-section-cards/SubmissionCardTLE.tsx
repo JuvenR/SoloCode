@@ -1,16 +1,15 @@
-import '../css/submissionCards.css'
-import btnClose from '../assets/closeButton.png'
+import '../../css/submissionCards.css'
+import btnClose from '../../assets/closeButton.png'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
 import type { SubmissionProps } from './SubmissionCard'
 
-export default function SubmissionCardWA({ onClose, submission }: SubmissionProps) {
-
+export default function SubmissionCardTLE({ onClose, submission }: SubmissionProps) {
     return (
         <>
             <div className='card-submission-container' id='red-container'>
                 <main className='card-submission-main'>
-                    <strong className='card-title' id='red-title'>Wrong Answer</strong>
+                    <strong className='card-title' id='red-title'>Time Limit Exceeded</strong>
                     <motion.img
                         whileHover={{ y: -4 }}
                         src={btnClose} onClick={onClose}></motion.img>
@@ -24,40 +23,15 @@ export default function SubmissionCardWA({ onClose, submission }: SubmissionProp
                     </p>
                 </article>
 
-                 <article className='submission-testcase-container'>
-                   <motion.button 
-                   whileHover={{y:-4}}
-                   className='submission-use-testcase'>
-                    Use Testcase
-                   </motion.button>
-                </article>
-
-                <article className='submission-input'>
+                <article className='submission-last-executed-input'>
                     <p className='submission-subtitle'>
-                        Your Input
+                        Last Executed Input
                     </p>
                     <div className='executed-code'>
-                        {submission.input}
+                        {submission.lastExecutedInput}
                     </div>
                 </article>
 
-                <article className='submission-output'>
-                    <p className='submission-subtitle'>
-                        Output
-                    </p>
-                    <div className='executed-code'>
-                        {submission.output}
-                    </div>
-                </article>
-
-                 <article className='submission-expected'>
-                    <p className='submission-subtitle'>
-                        Expected
-                    </p>
-                    <div className='executed-code'>
-                        {submission.expected}
-                    </div>
-                </article>
 
                 <article className='submission-code'>
                     <div className='submission-code-details'>
@@ -70,7 +44,7 @@ export default function SubmissionCardWA({ onClose, submission }: SubmissionProp
                         </p>
                     </div>
 
-                    <CodeContainer answerCode={submission.code}/>
+                    <CodeContainer answerCode={submission.code} />
                 </article>
             </div>
         </>

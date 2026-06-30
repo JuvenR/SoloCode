@@ -1,10 +1,11 @@
 import ProblemDescription from './ProblemDescription'
-import ProblemSubmissions from '../submissions-section-cards/ProblemSubmissions'
+
 import { useState } from 'react'
 import { motion } from 'motion/react'
 import { mockProblems } from '../services/ProblemService'
 import { useSubmissionController } from '../controllers/UseSubmissionsController'
 import type { ProblemViewProps } from './ProblemPage'
+import ProblemSubmissions from './submissions-section-cards/ProblemSubmissions'
 
 interface ProblemTabsProps {
     activeTab: string

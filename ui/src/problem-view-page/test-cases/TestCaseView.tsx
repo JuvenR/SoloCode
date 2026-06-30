@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useRef, useEffect, useState } from 'react'
-import type { ProblemCase, ProblemController } from '../controllers/UseProblemController'
+import type { ProblemCase, ProblemController } from '../../controllers/UseProblemController'
 
 interface TestCaseProps {
     number: string,

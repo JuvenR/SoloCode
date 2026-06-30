@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import '../css/submissionsView.css'
+import '../../css/submissionsView.css'
 import SubmissionCardAccepted from './SubmissionCardAccepted'
 import SubmissionCardCompileError from './SubmissionCardCE'
 import SubmissionCardOLE from './SubmissionCardOLE'
@@ -8,7 +8,8 @@ import SubmissionCardWA from './SubmissionCardWA'
 import SubmissionCardTLE from './SubmissionCardTLE'
 import SubmissionCardMLE from './SubmissionCardMLE'
 import SubmissionCardRE from './SubmissionCardRE'
-import type {Submission} from '../controllers/UseSubmissionsController'
+import type { Submission } from '../../controllers/UseSubmissionsController'
+
 
 export interface SubmissionProps {
     onClose: () => void

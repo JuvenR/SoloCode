@@ -1,8 +1,8 @@
-import '../css/submissionsView.css'
+import type { Submission } from '../../controllers/UseSubmissionsController'
+import '../../css/submissionsView.css'
 import SubmissionCard from './SubmissionCard'
 import { motion } from 'motion/react'
 import type { Variants } from 'motion/react'
-import { type Submission } from '../controllers/UseSubmissionsController'
 
 const cardVariants: Variants = {
     hidden: { opacity: 0, y: 10 },

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import '../css/submissionCards.css'
+import '../../css/submissionCards.css'
 import { motion } from 'motion/react'
 
 interface CodeProps {

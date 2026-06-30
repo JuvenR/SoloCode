@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import type { ExecutionResult, CaseResult } from '../runners/types'
-import type { ProblemCase } from '../controllers/UseProblemController'
+
 import { easeIn, motion, AnimatePresence } from 'motion/react'
+import type { ProblemCase } from '../../controllers/UseProblemController';
+import type { CaseResult, ExecutionResult } from '../../runners/types';
 
 interface TestResultViewProps {
     controller: {

@@ -1,16 +1,16 @@
-import '../css/submissionCards.css'
-import btnClose from '../assets/closeButton.png'
+import '../../css/submissionCards.css'
+import btnClose from '../../assets/closeButton.png'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
 import type { SubmissionProps } from './SubmissionCard'
 
-export default function SubmissionCardOLE({onClose, submission}: SubmissionProps) {
+export default function SubmissionCardWA({ onClose, submission }: SubmissionProps) {
 
     return (
         <>
             <div className='card-submission-container' id='red-container'>
                 <main className='card-submission-main'>
-                    <strong className='card-title' id='red-title'>Output Limit Exceeded</strong>
+                    <strong className='card-title' id='red-title'>Wrong Answer</strong>
                     <motion.img
                         whileHover={{ y: -4 }}
                         src={btnClose} onClick={onClose}></motion.img>
@@ -24,20 +24,39 @@ export default function SubmissionCardOLE({onClose, submission}: SubmissionProps
                     </p>
                 </article>
 
-                <article className='submission-last-executed-input'>
+                 <article className='submission-testcase-container'>
+                   <motion.button 
+                   whileHover={{y:-4}}
+                   className='submission-use-testcase'>
+                    Use Testcase
+                   </motion.button>
+                </article>
+
+                <article className='submission-input'>
                     <p className='submission-subtitle'>
-                        Last Executed Input
+                        Your Input
                     </p>
                     <div className='executed-code'>
-                        {submission.lastExecutedInput}
+                        {submission.input}
                     </div>
                 </article>
 
-                <article className='submission-last-executed-output'>
-                     <p className='submission-subtitle'>
-                        Last Executed Output
+                <article className='submission-output'>
+                    <p className='submission-subtitle'>
+                        Output
                     </p>
-                   <CodeContainer answerCode={submission.lastExecutedOutput}/>
+                    <div className='executed-code'>
+                        {submission.output}
+                    </div>
+                </article>
+
+                 <article className='submission-expected'>
+                    <p className='submission-subtitle'>
+                        Expected
+                    </p>
+                    <div className='executed-code'>
+                        {submission.expected}
+                    </div>
                 </article>
 
                 <article className='submission-code'>

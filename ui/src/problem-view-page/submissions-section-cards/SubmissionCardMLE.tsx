@@ -1,25 +1,25 @@
-import '../css/submissionCards.css'
-import btnClose from '../assets/closeButton.png'
+import '../../css/submissionCards.css'
+import btnClose from '../../assets/closeButton.png'
 import { motion } from 'motion/react'
 import CodeContainer from './CodeContainer'
 import type { SubmissionProps } from './SubmissionCard'
 
-export default function SubmissionCardTLE({ onClose, submission }: SubmissionProps) {
+export default function SubmissionCardMLE({onClose, submission}: SubmissionProps) {
     return (
         <>
             <div className='card-submission-container' id='red-container'>
                 <main className='card-submission-main'>
-                    <strong className='card-title' id='red-title'>Time Limit Exceeded</strong>
+                    <strong className='card-title' id='red-title'>Memory Limit Exceeded</strong>
                     <motion.img
                         whileHover={{ y: -4 }}
                         src={btnClose} onClick={onClose}></motion.img>
                 </main>
                 <article className='card-submission-info'>
                     <p className='card-submission-testcases'>
-                        {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
+                         {submission.testcasesPassed} / {submission.totalTestcases} Testcases passed
                     </p>
                     <p className='card-submission-date'>
-                        Submitted at {submission.date} {submission.timestamp}
+                       Submitted at {submission.date} {submission.timestamp}
                     </p>
                 </article>
 
@@ -44,7 +44,7 @@ export default function SubmissionCardTLE({ onClose, submission }: SubmissionPro
                         </p>
                     </div>
 
-                    <CodeContainer answerCode={submission.code} />
+                    <CodeContainer answerCode={submission.code}/>
                 </article>
             </div>
         </>
