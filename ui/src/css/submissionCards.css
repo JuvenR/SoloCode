@@ -228,7 +228,7 @@
 }
 
 .accepted-submission-info-content {
-    width: 100%;
+    width: 180px;
     height: 40.7px;
     background-color: var(--dark-gray-background);
     border-radius: 10px;
