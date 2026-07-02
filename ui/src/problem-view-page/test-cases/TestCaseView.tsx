@@ -160,7 +160,6 @@ export default function TestCasesView({ controller }: { controller: ProblemContr
                                     {controller.cases.map((test: ProblemCase, i: number) => (
                                         <motion.div
                                             key={test.id}
-                                            layout
                                             initial={{ opacity: 0, scale: 0.8 }}
                                             animate={{ opacity: 1, scale: 1 }}
                                             exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}

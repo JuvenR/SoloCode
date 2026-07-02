@@ -80,9 +80,16 @@
     color: #B9FFC0;
 }
 
-.code-editor-area{
+.code-editor-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor-area {
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    height: 430px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom: 2px solid var(--gray-border-color);
@@ -98,7 +105,12 @@
 }
 
 @media (max-width: 900px) {
+    .code-editor-wrapper {
+        height: auto;
+    }
+
     .code-editor-area {
+        flex: none;
         height: 420px;
     }
 }

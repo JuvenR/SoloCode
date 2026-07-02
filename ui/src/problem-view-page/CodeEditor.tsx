@@ -19,7 +19,7 @@ interface EditorLanguageProps {
 const CODE_LANGUAGES: Record<EditorLanguage, string> = {
     javascript: '// JavaScript runtime is not supported yet in the MVP.',
     python: 'class Solution:\n    def twoSum(self, nums, target):\n        return [0, 1]',
-    cpp: '// hello world from C++'
+    cpp: '// C++ runtime is not supported yet in the MVP'
 }
 
 function CodeEditorHeader({ language, setLanguage, onRun, isLoading }: EditorLanguageProps) {
@@ -112,7 +112,7 @@ export default function CodeEditor({ controller }: { controller: ProblemControll
 
     return (
         <>
-            <div >
+            <div className="code-editor-wrapper">
                 <CodeEditorHeader
                     language={controller.language}
                     setLanguage={changeLanguage}

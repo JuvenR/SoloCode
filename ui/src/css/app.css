@@ -44,25 +44,89 @@ body {
     background-color: var(--problem-view-background);
 }
 
-.main-app{
-     display: grid;
-    grid-template-columns: minmax(320px, 507px) minmax(0, 930px);
-    gap: 10px;
-    flex: 1;          
+.main-app {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
     min-width: 0;
-    width: auto;        
-    max-width: none;  
-    height: 100%;    
-    margin: 0;        
+    height: 100%;
+    margin: 0;
     padding: 0 3px;
     overflow: hidden;
+}
 
+.resize-handle-h {
+    flex-shrink: 0;
+    width: 10px;
+    cursor: col-resize;
+    position: relative;
+    background: transparent;
+    transition: background 0.15s;
+}
+
+.resize-handle-h::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 48px;
+    border-radius: 2px;
+    background: var(--gray-border-color);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.resize-handle-h:hover {
+    background: rgba(111, 116, 148, 0.12);
+}
+
+.resize-handle-h:hover::after {
+    opacity: 1;
+}
+
+.resize-handle-v {
+    flex-shrink: 0;
+    height: 10px;
+    cursor: row-resize;
+    position: relative;
+    background: transparent;
+    transition: background 0.15s;
+}
+
+.resize-handle-v::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 2px;
+    width: 48px;
+    border-radius: 2px;
+    background: var(--gray-border-color);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.resize-handle-v:hover {
+    background: rgba(111, 116, 148, 0.12);
+}
+
+.resize-handle-v:hover::after {
+    opacity: 1;
+}
+
+.resize-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
 }
 
 .main-menu {
     margin-top: 3px;
     margin-bottom: 9px;
-    flex: 0 0 88px;     
+    flex: 0 0 70px;     
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -74,7 +138,7 @@ body {
     display: flex;       
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 50px;
     padding-top: 24px;
 }
 
@@ -111,7 +175,12 @@ body {
     overflow: hidden;
 }
 
-.app-problem-view,
+.app-problem-view {
+    flex-shrink: 0;
+    min-width: 180px;
+    min-height: 0;
+}
+
 .app-code-editor,
 .run-code-area,
 .main-container {
@@ -119,23 +188,32 @@ body {
     width: 100%;
 }
 
-@media (max-width: 1180px) {
-    .main-app {
-        grid-template-columns: minmax(300px, 42%) minmax(0, 1fr);
-    }
-}
-
 @media (max-width: 900px) {
     .main-app {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         height: auto;
         min-height: 100vh;
         overflow: visible;
         padding: 0 8px 12px;
     }
 
+    .app-problem-view {
+        width: 100% !important;
+    }
+
+    .resize-handle-h,
+    .resize-handle-v {
+        display: none;
+    }
+
     .code-run {
         height: auto;
+    }
+
+    .app-code-editor {
+        flex: none !important;
+        height: auto !important;
+        overflow: visible !important;
     }
 
     .run-code-area {

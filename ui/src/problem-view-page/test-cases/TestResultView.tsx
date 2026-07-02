@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 
 import { easeIn, motion, AnimatePresence } from 'motion/react'
 import type { ProblemCase } from '../../controllers/UseProblemController';
@@ -216,7 +216,7 @@ function ResultACC({ controller }: TestResultViewProps) {
     )
 }
 
-export default function TestResultView({ controller }: TestResultViewProps) {
+function TestResultView({ controller }: TestResultViewProps) {
     const { isRunning, results } = controller
 
     if (isRunning) {
@@ -232,7 +232,7 @@ export default function TestResultView({ controller }: TestResultViewProps) {
     if (!results) {
         return (
             <div className='results-view'>
-                <p>Without results. Run your code to see them.</p>
+                <p>You don't have any rest results yet. Run your code to see them.</p>
             </div>
         )
     }
@@ -249,3 +249,9 @@ export default function TestResultView({ controller }: TestResultViewProps) {
 
     return <ResultACC controller={controller} />
 }
+
+export default memo(TestResultView, (prev, next) => {
+    return prev.controller.isRunning === next.controller.isRunning &&
+           prev.controller.results === next.controller.results &&
+           prev.controller.cases === next.controller.cases
+})
